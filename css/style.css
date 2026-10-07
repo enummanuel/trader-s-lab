@@ -2089,6 +2089,212 @@ button,
 }
 
 
+/* ================================
+   MOBILE SIDEBAR
+================================ */
+
+.mobile-menu-button {
+    display: none;
+}
+
+.mobile-sidebar-overlay {
+    display: none;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    /* ================================
+       MOBILE HAMBURGER
+    ================================= */
+
+    .mobile-menu-button {
+        position: fixed;
+
+        top: 16px;
+        right: 16px;
+        left: auto;
+
+        width: 42px;
+        height: 42px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+
+        background: var(--surface);
+        color: var(--primary-text);
+
+        cursor: pointer;
+
+        z-index: 1200;
+    }
+
+
+    .mobile-menu-button span {
+        position: relative;
+
+        width: 18px;
+        height: 2px;
+
+        display: block;
+
+        background: currentColor;
+        border-radius: 2px;
+
+        transition: background 0.2s ease;
+    }
+
+
+    .mobile-menu-button span::before,
+    .mobile-menu-button span::after {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+
+        width: 18px;
+        height: 2px;
+
+        background: currentColor;
+        border-radius: 2px;
+
+        transition:
+            transform 0.2s ease,
+            top 0.2s ease;
+    }
+
+
+    .mobile-menu-button span::before {
+        top: -6px;
+    }
+
+
+    .mobile-menu-button span::after {
+        top: 6px;
+    }
+
+
+    /* ================================
+       PAGE CONTENT
+    ================================= */
+
+    .app-main {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0;
+
+        margin-left: 0 !important;
+
+        padding-top: 68px;
+    }
+
+
+    /* ================================
+       HAMBURGER → CLOSE
+    ================================= */
+
+    body.mobile-menu-open .mobile-menu-button span {
+        background: transparent;
+    }
+
+
+    body.mobile-menu-open .mobile-menu-button span::before {
+        top: 0;
+
+        transform: rotate(45deg);
+    }
+
+
+    body.mobile-menu-open .mobile-menu-button span::after {
+        top: 0;
+
+        transform: rotate(-45deg);
+    }
+
+
+    /* ================================
+       MOBILE SIDEBAR
+    ================================= */
+
+    .app-sidebar {
+        position: fixed !important;
+
+        top: 0 !important;
+        left: 0 !important;
+        right: auto !important;
+        bottom: 0 !important;
+
+        width: min(280px, 82vw) !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+
+        margin: 0 !important;
+
+        z-index: 1100;
+
+        transform: translate3d(-100%, 0, 0);
+
+        transition: transform 0.25s ease;
+
+        overflow-y: auto;
+    }
+
+
+    body.mobile-menu-open .app-sidebar {
+        transform: translate3d(0, 0, 0);
+    }
+
+
+    /* ================================
+       OVERLAY
+    ================================= */
+
+    .mobile-sidebar-overlay {
+        position: fixed !important;
+
+        inset: 0;
+
+        width: 100vw;
+        height: 100vh;
+
+        z-index: 1000;
+
+        display: block;
+
+        background: rgba(17, 20, 24, 0.22);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+            opacity 0.25s ease,
+            visibility 0.25s ease;
+    }
+
+
+    body.mobile-menu-open .mobile-sidebar-overlay {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+    body {
+        overflow-x: hidden;
+    }
+
+}
+
+
+
 /* Main application area */
 
 .app-main {
@@ -2176,6 +2382,15 @@ button,
         width: calc(100% - 210px);
         margin-left: 210px;
         padding: 32px 24px;
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .app-main {
+        padding-top: 72px;
     }
 
 }
@@ -3960,31 +4175,114 @@ button,
 
 /* Form Responsive */
 
+/* Form Responsive */
+
 @media (max-width: 650px) {
 
+    .trade-form-section {
+        padding: 24px 10px;
+    }
+
+
+    /* Section heading */
+
+    .trade-form-section-heading {
+        grid-template-columns: 28px minmax(0, 1fr);
+        column-gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .trade-form-section-heading small {
+        max-width: 100%;
+    }
+
+
+    /* Form grid */
+
     .trade-form-grid {
-        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 100%;
+        grid-template-columns: minmax(0, 1fr);
+        column-gap: 0;
+        row-gap: 18px;
+        padding-left: 0;
+        box-sizing: border-box;
+    }
+
+
+    /* Fields */
+
+    .trade-field {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
     }
 
     .trade-field-full {
         grid-column: auto;
+        width: 100%;
+        margin-left: 0;
     }
 
-    .trade-form-section {
-        padding: 24px 0;
+
+    /* Inputs */
+
+    .trade-field input,
+    .trade-field select,
+    .trade-field textarea {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
+
+
+    /* Screenshot */
 
     .trade-screenshot-upload {
         width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+        box-sizing: border-box;
     }
 
+    .screenshot-dropzone {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding: 24px 16px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .screenshot-dropzone strong,
+    .screenshot-dropzone small {
+        max-width: 100%;
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+
+
+    /* Notes */
+
+    .trade-field textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+
+    /* Form actions */
+
     .trade-form-actions {
+        padding: 20px 0;
         flex-direction: column-reverse;
         align-items: stretch;
+        gap: 10px;
     }
 
     .trade-form-actions button {
         width: 100%;
+        max-width: 100%;
     }
 
 }
@@ -6741,4 +7039,299 @@ body.modal-open {
 .contact-button:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+}
+
+
+/* ======================================================
+   JOURNAL REFLECTIONS
+   ====================================================== */
+
+.journal-reflections {
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.journal-reflection-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+    padding: 20px;
+}
+
+.journal-reflection-stat {
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--surface-soft);
+}
+
+.journal-reflection-stat span {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+}
+
+.journal-reflection-stat strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.journal-reflection-stat small {
+    display: block;
+    margin-top: 5px;
+    color: var(--text-muted);
+}
+
+
+/* ------------------------------------------------------
+   SCROLLABLE REFLECTION FEED
+   ------------------------------------------------------ */
+
+.journal-reflection-list {
+    max-height: 520px;
+    margin-top: 24px;
+    padding-right: 8px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+}
+
+.journal-reflection-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.journal-reflection-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.journal-reflection-list::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--border-color);
+}
+
+.journal-reflection-list::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+
+/* ------------------------------------------------------
+   REFLECTION ITEM
+   ------------------------------------------------------ */
+
+.journal-reflection-item {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.journal-reflection-item:first-child {
+    padding-top: 0;
+}
+
+.journal-reflection-item:last-child {
+    border-bottom: none;
+}
+
+
+.journal-reflection-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.journal-reflection-trade {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.journal-reflection-trade strong {
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+.journal-reflection-trade span {
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: var(--surface-soft);
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+
+.journal-reflection-result {
+    flex-shrink: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.journal-reflection-result.profit {
+    color: var(--success-color);
+}
+
+.journal-reflection-result.loss {
+    color: var(--danger-color);
+}
+
+.journal-reflection-result.neutral {
+    color: var(--text-muted);
+}
+
+
+.journal-reflection-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.journal-reflection-details span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+
+.journal-reflection-note {
+    margin: 16px 0 0;
+    padding: 18px 20px;
+    border-left: 2px solid var(--border-color);
+    border-radius: 0 10px 10px 0;
+    background: var(--surface-soft);
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* ------------------------------------------------------
+   EMPTY STATE
+   ------------------------------------------------------ */
+
+.journal-reflection-empty {
+    margin-top: 24px;
+    padding: 40px 24px;
+    border: 1px dashed var(--border-color);
+    border-radius: 14px;
+    text-align: center;
+}
+
+.journal-reflection-empty strong {
+    display: block;
+    color: var(--text-primary);
+}
+
+.journal-reflection-empty p {
+    margin: 8px 0 0;
+    color: var(--text-muted);
+}
+
+
+/* ------------------------------------------------------
+   MOBILE
+   ------------------------------------------------------ */
+
+@media (max-width: 768px) {
+
+    .journal-reflection-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .journal-reflection-list {
+        max-height: 420px;
+        padding-right: 6px;
+    }
+
+    .journal-reflection-meta {
+        align-items: flex-start;
+    }
+
+    .journal-reflection-note {
+        padding: 16px;
+    }
+
+}
+
+/* ======================================================
+   PDF JOURNAL REFLECTIONS
+   ====================================================== */
+
+.pdf-reflections-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.pdf-reflection-item {
+    padding: 18px 20px;
+    border: 1px solid #e3e5e8;
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+.pdf-reflection-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.pdf-reflection-trade {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.pdf-reflection-trade strong {
+    font-size: 14px;
+}
+
+.pdf-reflection-trade span {
+    font-size: 11px;
+    color: #666;
+}
+
+.pdf-reflection-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 11px;
+    color: #777;
+}
+
+.pdf-reflection-note {
+    margin: 0;
+    padding: 14px 16px;
+    border-left: 2px solid #cfd3d8;
+    background: #fff;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #333;
+}
+
+.pdf-reflection-result {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.pdf-reflection-result.profit {
+    color: #16794c;
+}
+
+.pdf-reflection-result.loss {
+    color: #b42318;
+}
+
+.pdf-reflection-result.neutral {
+    color: #777;
 }

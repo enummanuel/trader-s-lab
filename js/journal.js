@@ -7,6 +7,7 @@ let activeJournalFilter = "all";
 
 
 function getCurrentUserId() {
+
     const sessionData =
         localStorage.getItem("tradersLabSession");
 
@@ -15,11 +16,14 @@ function getCurrentUserId() {
     }
 
     try {
-        const session = JSON.parse(sessionData);
+
+        const session =
+            JSON.parse(sessionData);
 
         return session.userId || null;
 
     } catch (error) {
+
         console.error(
             "Unable to read current session:",
             error
@@ -31,7 +35,9 @@ function getCurrentUserId() {
 
 
 function getTradesStorageKey() {
-    const userId = getCurrentUserId();
+
+    const userId =
+        getCurrentUserId();
 
     if (!userId) {
         return null;
@@ -42,7 +48,9 @@ function getTradesStorageKey() {
 
 
 function getTrades() {
-    const storageKey = getTradesStorageKey();
+
+    const storageKey =
+        getTradesStorageKey();
 
     if (!storageKey) {
         return [];
@@ -52,9 +60,15 @@ function getTrades() {
         localStorage.getItem(storageKey);
 
     if (storedTrades) {
+
         try {
-            return JSON.parse(storedTrades);
+
+            return JSON.parse(
+                storedTrades
+            );
+
         } catch (error) {
+
             console.error(
                 "Unable to read user trades:",
                 error
@@ -70,16 +84,22 @@ function getTrades() {
     // --------------------------------------------------
 
     const oldTrades =
-        localStorage.getItem("tradersLabTrades");
+        localStorage.getItem(
+            "tradersLabTrades"
+        );
 
     if (oldTrades) {
+
         try {
+
             const parsedOldTrades =
                 JSON.parse(oldTrades);
 
             localStorage.setItem(
                 storageKey,
-                JSON.stringify(parsedOldTrades)
+                JSON.stringify(
+                    parsedOldTrades
+                )
             );
 
             localStorage.removeItem(
@@ -89,6 +109,7 @@ function getTrades() {
             return parsedOldTrades;
 
         } catch (error) {
+
             console.error(
                 "Unable to migrate old journal data:",
                 error
@@ -103,10 +124,12 @@ function getTrades() {
 
 
 function saveTrades(trades) {
+
     const storageKey =
         getTradesStorageKey();
 
     if (!storageKey) {
+
         console.error(
             "No logged-in user found. Trades cannot be saved."
         );
@@ -140,6 +163,12 @@ function renderTrades() {
             "journal-empty-state"
         );
 
+
+    if (!tradeList || !emptyState) {
+        return;
+    }
+
+
     tradeList.innerHTML = "";
 
 
@@ -159,7 +188,9 @@ function renderTrades() {
     trades.forEach(function (trade) {
 
         const tradeItem =
-            document.createElement("article");
+            document.createElement(
+                "article"
+            );
 
         tradeItem.className =
             "journal-trade-item";
@@ -167,13 +198,13 @@ function renderTrades() {
 
         tradeItem.innerHTML = `
             <div>
-                <strong>${trade.pair}</strong>
-                <span>${trade.direction}</span>
+                <strong>${trade.pair || "—"}</strong>
+                <span>${trade.direction || "—"}</span>
             </div>
 
             <div>
-                <span>${trade.setup}</span>
-                <small>${trade.date}</small>
+                <span>${trade.setup || "—"}</span>
+                <small>${trade.date || "—"}</small>
 
                 <small class="trade-outcome ${
                     trade.outcome
@@ -219,7 +250,7 @@ function renderTrades() {
                     Number(trade.result) > 0
                         ? "+"
                         : ""
-                }${trade.result}R
+                }${trade.result || 0}R
             </strong>
 
             <div class="journal-trade-actions">
@@ -247,6 +278,7 @@ function renderTrades() {
         tradeList.appendChild(
             tradeItem
         );
+
     });
 }
 
@@ -300,426 +332,445 @@ const exportCsvButton =
 // JSON EXPORT
 // ======================================================
 
-exportJournalButton.addEventListener(
-    "click",
-    function () {
+if (exportJournalButton) {
 
-        const trades =
-            getTrades();
+    exportJournalButton.addEventListener(
+        "click",
+        function () {
+
+            const trades =
+                getTrades();
 
 
-        if (trades.length === 0) {
+            if (trades.length === 0) {
 
-            alert(
-                "There are no trades to export yet."
+                alert(
+                    "There are no trades to export yet."
+                );
+
+                return;
+            }
+
+
+            const exportData = {
+
+                app: "Traders Lab",
+
+                type: "trading-journal",
+
+                version: 1,
+
+                exportedAt:
+                    new Date().toISOString(),
+
+                trades: trades
+
+            };
+
+
+            const jsonData =
+                JSON.stringify(
+                    exportData,
+                    null,
+                    2
+                );
+
+
+            const blob =
+                new Blob(
+                    [jsonData],
+                    {
+                        type:
+                            "application/json"
+                    }
+                );
+
+
+            const downloadUrl =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const downloadLink =
+                document.createElement(
+                    "a"
+                );
+
+
+            downloadLink.href =
+                downloadUrl;
+
+
+            downloadLink.download =
+                `traders-lab-journal-${new Date()
+                    .toISOString()
+                    .slice(0, 10)}.json`;
+
+
+            document.body.appendChild(
+                downloadLink
             );
 
-            return;
+
+            downloadLink.click();
+
+
+            downloadLink.remove();
+
+
+            URL.revokeObjectURL(
+                downloadUrl
+            );
+
         }
+    );
 
-
-        const exportData = {
-
-            app: "Traders Lab",
-
-            type: "trading-journal",
-
-            version: 1,
-
-            exportedAt:
-                new Date().toISOString(),
-
-            trades: trades
-        };
-
-
-        const jsonData =
-            JSON.stringify(
-                exportData,
-                null,
-                2
-            );
-
-
-        const blob =
-            new Blob(
-                [jsonData],
-                {
-                    type:
-                        "application/json"
-                }
-            );
-
-
-        const downloadUrl =
-            URL.createObjectURL(
-                blob
-            );
-
-
-        const downloadLink =
-            document.createElement(
-                "a"
-            );
-
-
-        downloadLink.href =
-            downloadUrl;
-
-
-        downloadLink.download =
-            `traders-lab-journal-${new Date()
-                .toISOString()
-                .slice(0, 10)}.json`;
-
-
-        document.body.appendChild(
-            downloadLink
-        );
-
-
-        downloadLink.click();
-
-
-        downloadLink.remove();
-
-
-        URL.revokeObjectURL(
-            downloadUrl
-        );
-    }
-);
+}
 
 
 // ======================================================
 // JSON IMPORT
 // ======================================================
 
-importJournalButton.addEventListener(
-    "click",
-    function () {
+if (
+    importJournalButton &&
+    journalImportFile
+) {
 
-        journalImportFile.click();
+    importJournalButton.addEventListener(
+        "click",
+        function () {
 
-    }
-);
+            journalImportFile.click();
 
-
-journalImportFile.addEventListener(
-    "change",
-    function () {
-
-        const file =
-            journalImportFile.files[0];
-
-
-        if (!file) {
-            return;
         }
+    );
 
 
-        const reader =
-            new FileReader();
+    journalImportFile.addEventListener(
+        "change",
+        function () {
+
+            const file =
+                journalImportFile.files[0];
 
 
-        reader.onload =
-            function (event) {
+            if (!file) {
+                return;
+            }
 
-                try {
 
-                    const importedData =
-                        JSON.parse(
-                            event.target.result
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (event) {
+
+                    try {
+
+                        const importedData =
+                            JSON.parse(
+                                event.target.result
+                            );
+
+
+                        if (
+                            !importedData ||
+                            importedData.app !==
+                                "Traders Lab" ||
+                            !Array.isArray(
+                                importedData.trades
+                            )
+                        ) {
+
+                            alert(
+                                "Invalid Traders Lab journal file."
+                            );
+
+                            return;
+                        }
+
+
+                        const confirmed =
+                            confirm(
+                                "Importing this journal will replace your current journal data. Continue?"
+                            );
+
+
+                        if (!confirmed) {
+                            return;
+                        }
+
+
+                        saveTrades(
+                            importedData.trades
                         );
 
 
-                    if (
-                        !importedData ||
-                        importedData.app !==
-                            "Traders Lab" ||
-                        !Array.isArray(
-                            importedData.trades
-                        )
-                    ) {
+                        activeJournalFilter =
+                            "all";
+
+
+                        document
+                            .querySelectorAll(
+                                ".journal-filter"
+                            )
+                            .forEach(
+                                function (button) {
+
+                                    button.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                        const allFilterButton =
+                            document.querySelector(
+                                '.journal-filter[data-filter="all"]'
+                            );
+
+
+                        if (allFilterButton) {
+
+                            allFilterButton.classList.add(
+                                "active"
+                            );
+
+                        }
+
+
+                        renderTrades();
+
+                        updateJournalSummary();
+
+                        updateJournalReflections();
+
 
                         alert(
-                            "Invalid Traders Lab journal file."
-                        );
-
-                        return;
-                    }
-
-
-                    const confirmed =
-                        confirm(
-                            "Importing this journal will replace your current journal data. Continue?"
+                            `${importedData.trades.length} trade(s) imported successfully.`
                         );
 
 
-                    if (!confirmed) {
-                        return;
-                    }
+                    } catch (error) {
 
-
-                    saveTrades(
-                        importedData.trades
-                    );
-
-
-                    activeJournalFilter =
-                        "all";
-
-
-                    document
-                        .querySelectorAll(
-                            ".journal-filter"
-                        )
-                        .forEach(
-                            function (button) {
-
-                                button.classList.remove(
-                                    "active"
-                                );
-
-                            }
+                        console.error(
+                            "Journal import error:",
+                            error
                         );
 
 
-                    const allFilterButton =
-                        document.querySelector(
-                            '.journal-filter[data-filter="all"]'
-                        );
-
-
-                    if (allFilterButton) {
-
-                        allFilterButton.classList.add(
-                            "active"
+                        alert(
+                            "This file could not be imported. Please select a valid Traders Lab JSON file."
                         );
 
                     }
 
 
-                    renderTrades();
+                    journalImportFile.value =
+                        "";
 
-                    updateJournalSummary();
-
-
-                    alert(
-                        `${importedData.trades.length} trade(s) imported successfully.`
-                    );
+                };
 
 
-                } catch (error) {
+            reader.readAsText(
+                file
+            );
 
-                    console.error(
-                        "Journal import error:",
-                        error
-                    );
+        }
+    );
 
-
-                    alert(
-                        "This file could not be imported. Please select a valid Traders Lab JSON file."
-                    );
-
-                }
-
-
-                journalImportFile.value =
-                    "";
-
-            };
-
-
-        reader.readAsText(
-            file
-        );
-
-    }
-);
+}
 
 
 // ======================================================
 // CSV EXPORT
 // ======================================================
 
-exportCsvButton.addEventListener(
-    "click",
-    function () {
+if (exportCsvButton) {
 
-        const trades =
-            getTrades();
+    exportCsvButton.addEventListener(
+        "click",
+        function () {
 
-
-        if (trades.length === 0) {
-
-            alert(
-                "There are no trades to export yet."
-            );
-
-            return;
-        }
+            const trades =
+                getTrades();
 
 
-        const headers = [
+            if (trades.length === 0) {
 
-            "ID",
+                alert(
+                    "There are no trades to export yet."
+                );
 
-            "Date",
-
-            "Time",
-
-            "Pair",
-
-            "Direction",
-
-            "Setup",
-
-            "Entry",
-
-            "Stop Loss",
-
-            "Take Profit",
-
-            "Risk",
-
-            "Outcome",
-
-            "Result",
-
-            "Notes"
-
-        ];
+                return;
+            }
 
 
-        const rows =
-            trades.map(
-                function (trade) {
+            const headers = [
 
-                    return [
+                "ID",
 
-                        trade.id,
+                "Date",
 
-                        trade.date,
+                "Time",
 
-                        trade.time,
+                "Pair",
 
-                        trade.pair,
+                "Direction",
 
-                        trade.direction,
+                "Setup",
 
-                        trade.setup,
+                "Entry",
 
-                        trade.entry,
+                "Stop Loss",
 
-                        trade.stopLoss,
+                "Take Profit",
 
-                        trade.takeProfit,
+                "Risk",
 
-                        trade.risk,
+                "Outcome",
 
-                        trade.outcome,
+                "Result",
 
-                        trade.result,
+                "Notes"
 
-                        trade.notes
-
-                    ];
-
-                }
-            );
+            ];
 
 
-        function escapeCsvValue(
-            value
-        ) {
+            const rows =
+                trades.map(
+                    function (trade) {
 
-            const stringValue =
-                String(
-                    value ?? ""
+                        return [
+
+                            trade.id,
+
+                            trade.date,
+
+                            trade.time,
+
+                            trade.pair,
+
+                            trade.direction,
+
+                            trade.setup,
+
+                            trade.entry,
+
+                            trade.stopLoss,
+
+                            trade.takeProfit,
+
+                            trade.risk,
+
+                            trade.outcome,
+
+                            trade.result,
+
+                            trade.notes
+
+                        ];
+
+                    }
                 );
 
 
-            return `"${stringValue.replace(
-                /"/g,
-                '""'
-            )}"`;
+            function escapeCsvValue(
+                value
+            ) {
+
+                const stringValue =
+                    String(
+                        value ?? ""
+                    );
+
+
+                return `"${stringValue.replace(
+                    /"/g,
+                    '""'
+                )}"`;
+
+            }
+
+
+            const csv = [
+
+                headers
+                    .map(
+                        escapeCsvValue
+                    )
+                    .join(","),
+
+                ...rows.map(
+                    function (row) {
+
+                        return row
+                            .map(
+                                escapeCsvValue
+                            )
+                            .join(",");
+
+                    }
+                )
+
+            ].join("\n");
+
+
+            const blob =
+                new Blob(
+                    [csv],
+                    {
+                        type:
+                            "text/csv;charset=utf-8;"
+                    }
+                );
+
+
+            const downloadUrl =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const downloadLink =
+                document.createElement(
+                    "a"
+                );
+
+
+            downloadLink.href =
+                downloadUrl;
+
+
+            downloadLink.download =
+                `traders-lab-journal-${new Date()
+                    .toISOString()
+                    .slice(0, 10)}.csv`;
+
+
+            document.body.appendChild(
+                downloadLink
+            );
+
+
+            downloadLink.click();
+
+
+            downloadLink.remove();
+
+
+            URL.revokeObjectURL(
+                downloadUrl
+            );
 
         }
+    );
 
-
-        const csv = [
-
-            headers
-                .map(
-                    escapeCsvValue
-                )
-                .join(","),
-
-            ...rows.map(
-                function (row) {
-
-                    return row
-                        .map(
-                            escapeCsvValue
-                        )
-                        .join(",");
-
-                }
-            )
-
-        ].join("\n");
-
-
-        const blob =
-            new Blob(
-                [csv],
-                {
-                    type:
-                        "text/csv;charset=utf-8;"
-                }
-            );
-
-
-        const downloadUrl =
-            URL.createObjectURL(
-                blob
-            );
-
-
-        const downloadLink =
-            document.createElement(
-                "a"
-            );
-
-
-        downloadLink.href =
-            downloadUrl;
-
-
-        downloadLink.download =
-            `traders-lab-journal-${new Date()
-                .toISOString()
-                .slice(0, 10)}.csv`;
-
-
-        document.body.appendChild(
-            downloadLink
-        );
-
-
-        downloadLink.click();
-
-
-        downloadLink.remove();
-
-
-        URL.revokeObjectURL(
-            downloadUrl
-        );
-
-    }
-);
+}
 
 
 // ======================================================
@@ -728,36 +779,54 @@ exportCsvButton.addEventListener(
 
 function openTradeForm() {
 
+    if (!addTradePanel) {
+        return;
+    }
+
     addTradePanel.style.display =
         "block";
-
 }
 
 
 function closeTradeForm() {
 
+    if (!addTradePanel) {
+        return;
+    }
+
     addTradePanel.style.display =
         "none";
+}
+
+
+if (openTradeButton) {
+
+    openTradeButton.addEventListener(
+        "click",
+        openTradeForm
+    );
 
 }
 
 
-openTradeButton.addEventListener(
-    "click",
-    openTradeForm
-);
+if (openTradeEmptyButton) {
+
+    openTradeEmptyButton.addEventListener(
+        "click",
+        openTradeForm
+    );
+
+}
 
 
-openTradeEmptyButton.addEventListener(
-    "click",
-    openTradeForm
-);
+if (cancelTradeButton) {
 
+    cancelTradeButton.addEventListener(
+        "click",
+        closeTradeForm
+    );
 
-cancelTradeButton.addEventListener(
-    "click",
-    closeTradeForm
-);
+}
 
 
 // ======================================================
@@ -798,416 +867,468 @@ let selectedScreenshot =
 // SCREENSHOT UPLOAD
 // ======================================================
 
-tradeScreenshotInput.addEventListener(
-    "change",
-    function () {
+if (tradeScreenshotInput) {
 
-        const file =
-            tradeScreenshotInput.files[0];
+    tradeScreenshotInput.addEventListener(
+        "change",
+        function () {
 
-
-        if (!file) {
-
-            selectedScreenshot =
-                null;
-
-            return;
-        }
+            const file =
+                tradeScreenshotInput.files[0];
 
 
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function (event) {
+            if (!file) {
 
                 selectedScreenshot =
-                    event.target.result;
+                    null;
+
+                return;
+            }
 
 
-                const preview =
-                    document.getElementById(
-                        "screenshot-preview"
-                    );
+            const reader =
+                new FileReader();
 
 
-                preview.src =
-                    selectedScreenshot;
+            reader.onload =
+                function (event) {
+
+                    selectedScreenshot =
+                        event.target.result;
 
 
-                preview.style.display =
-                    "block";
+                    const preview =
+                        document.getElementById(
+                            "screenshot-preview"
+                        );
 
 
-                const dropzone =
-                    document.querySelector(
-                        ".screenshot-dropzone"
-                    );
+                    if (preview) {
+
+                        preview.src =
+                            selectedScreenshot;
+
+                        preview.style.display =
+                            "block";
+
+                    }
 
 
-                dropzone
-                    .querySelector(
-                        ".screenshot-upload-icon"
-                    )
-                    .textContent =
-                    "✓";
+                    const dropzone =
+                        document.querySelector(
+                            ".screenshot-dropzone"
+                        );
 
 
-                dropzone
-                    .querySelector(
-                        "strong"
-                    )
-                    .textContent =
-                    "Screenshot attached";
+                    if (!dropzone) {
+                        return;
+                    }
 
 
-                dropzone
-                    .querySelector(
-                        "small"
-                    )
-                    .textContent =
-                    file.name;
+                    const icon =
+                        dropzone.querySelector(
+                            ".screenshot-upload-icon"
+                        );
 
-            };
+                    const strong =
+                        dropzone.querySelector(
+                            "strong"
+                        );
+
+                    const small =
+                        dropzone.querySelector(
+                            "small"
+                        );
 
 
-        reader.readAsDataURL(
-            file
-        );
+                    if (icon) {
+                        icon.textContent =
+                            "✓";
+                    }
 
-    }
-);
+                    if (strong) {
+                        strong.textContent =
+                            "Screenshot attached";
+                    }
+
+                    if (small) {
+                        small.textContent =
+                            file.name;
+                    }
+
+                };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+
+}
 
 
 // ======================================================
 // OUTCOME / RESULT
 // ======================================================
 
-tradeOutcomeInput.addEventListener(
-    "change",
-    function () {
+if (
+    tradeOutcomeInput &&
+    tradeRiskInput &&
+    tradeResultInput
+) {
 
-        if (
-            tradeOutcomeInput.value ===
-            "LOSS"
-        ) {
+    tradeOutcomeInput.addEventListener(
+        "change",
+        function () {
 
-            const risk =
-                Number(
-                    tradeRiskInput.value
-                );
+            if (
+                tradeOutcomeInput.value ===
+                "LOSS"
+            ) {
 
-
-            tradeResultInput.value =
-                risk > 0
-                    ? `-${risk}`
-                    : "";
-
-
-            tradeResultInput.readOnly =
-                true;
-        }
+                const risk =
+                    Number(
+                        tradeRiskInput.value
+                    );
 
 
-        if (
-            tradeOutcomeInput.value ===
-            "BREAKEVEN"
-        ) {
-
-            tradeResultInput.value =
-                "0";
+                tradeResultInput.value =
+                    risk > 0
+                        ? `-${risk}`
+                        : "";
 
 
-            tradeResultInput.readOnly =
-                true;
-        }
+                tradeResultInput.readOnly =
+                    true;
+            }
 
 
-        if (
-            tradeOutcomeInput.value ===
-            "WIN"
-        ) {
+            if (
+                tradeOutcomeInput.value ===
+                "BREAKEVEN"
+            ) {
 
-            tradeResultInput.value =
-                "";
-
-
-            tradeResultInput.readOnly =
-                false;
-        }
-
-    }
-);
+                tradeResultInput.value =
+                    "0";
 
 
-tradeRiskInput.addEventListener(
-    "input",
-    function () {
-
-        if (
-            tradeOutcomeInput.value ===
-            "LOSS"
-        ) {
-
-            const risk =
-                Number(
-                    tradeRiskInput.value
-                );
+                tradeResultInput.readOnly =
+                    true;
+            }
 
 
-            tradeResultInput.value =
-                risk > 0
-                    ? `-${risk}`
-                    : "";
+            if (
+                tradeOutcomeInput.value ===
+                "WIN"
+            ) {
+
+                tradeResultInput.value =
+                    "";
+
+
+                tradeResultInput.readOnly =
+                    false;
+            }
 
         }
+    );
 
-    }
-);
+
+    tradeRiskInput.addEventListener(
+        "input",
+        function () {
+
+            if (
+                tradeOutcomeInput.value ===
+                "LOSS"
+            ) {
+
+                const risk =
+                    Number(
+                        tradeRiskInput.value
+                    );
+
+
+                tradeResultInput.value =
+                    risk > 0
+                        ? `-${risk}`
+                        : "";
+
+            }
+
+        }
+    );
+
+}
 
 
 // ======================================================
 // SAVE TRADE
 // ======================================================
 
-tradeForm.addEventListener(
-    "submit",
-    function (event) {
+if (tradeForm) {
 
-        event.preventDefault();
+    tradeForm.addEventListener(
+        "submit",
+        function (event) {
 
-
-        const trade = {
-
-            pair:
-                document.getElementById(
-                    "trade-pair"
-                ).value,
-
-            direction:
-                document.getElementById(
-                    "trade-direction"
-                ).value,
-
-            date:
-                document.getElementById(
-                    "trade-date"
-                ).value,
-
-            time:
-                document.getElementById(
-                    "trade-time"
-                ).value,
-
-            setup:
-                document.getElementById(
-                    "trade-setup"
-                ).value.trim(),
-
-            entry:
-                document.getElementById(
-                    "trade-entry"
-                ).value,
-
-            stopLoss:
-                document.getElementById(
-                    "trade-stop"
-                ).value,
-
-            takeProfit:
-                document.getElementById(
-                    "trade-target"
-                ).value,
-
-            risk:
-                document.getElementById(
-                    "trade-risk"
-                ).value,
-
-            outcome:
-                document.getElementById(
-                    "trade-outcome"
-                ).value,
-
-            result:
-                document.getElementById(
-                    "trade-result"
-                ).value,
-
-            notes:
-                document.getElementById(
-                    "trade-notes"
-                ).value.trim(),
-
-            screenshot:
-                selectedScreenshot
-
-        };
+            event.preventDefault();
 
 
-        if (
-            !trade.pair ||
-            !trade.direction ||
-            !trade.date ||
-            !trade.setup ||
-            !trade.risk ||
-            !trade.outcome ||
-            !trade.result
-        ) {
+            const trade = {
 
-            alert(
-                "Please complete all required trade fields."
-            );
+                pair:
+                    document.getElementById(
+                        "trade-pair"
+                    ).value,
 
-            return;
-        }
+                direction:
+                    document.getElementById(
+                        "trade-direction"
+                    ).value,
 
+                date:
+                    document.getElementById(
+                        "trade-date"
+                    ).value,
 
-        const trades =
-            getTrades();
+                time:
+                    document.getElementById(
+                        "trade-time"
+                    ).value,
 
+                setup:
+                    document.getElementById(
+                        "trade-setup"
+                    ).value.trim(),
 
-        // --------------------------------------------------
-        // EDIT
-        // --------------------------------------------------
+                entry:
+                    document.getElementById(
+                        "trade-entry"
+                    ).value,
 
-        if (
-            editingTradeId !==
-            null
-        ) {
+                stopLoss:
+                    document.getElementById(
+                        "trade-stop"
+                    ).value,
 
-            const tradeIndex =
-                trades.findIndex(
-                    function (existingTrade) {
+                takeProfit:
+                    document.getElementById(
+                        "trade-target"
+                    ).value,
 
-                        return (
-                            Number(
-                                existingTrade.id
-                            ) ===
-                            Number(
-                                editingTradeId
-                            )
-                        );
+                risk:
+                    document.getElementById(
+                        "trade-risk"
+                    ).value,
 
-                    }
-                );
+                outcome:
+                    document.getElementById(
+                        "trade-outcome"
+                    ).value,
+
+                result:
+                    document.getElementById(
+                        "trade-result"
+                    ).value,
+
+                notes:
+                    document.getElementById(
+                        "trade-notes"
+                    ).value.trim(),
+
+                screenshot:
+                    selectedScreenshot
+
+            };
 
 
             if (
-                tradeIndex !==
-                -1
+                !trade.pair ||
+                !trade.direction ||
+                !trade.date ||
+                !trade.setup ||
+                !trade.risk ||
+                !trade.outcome ||
+                !trade.result
             ) {
 
-                trade.id =
-                    editingTradeId;
+                alert(
+                    "Please complete all required trade fields."
+                );
+
+                return;
+            }
+
+
+            const trades =
+                getTrades();
+
+
+            // --------------------------------------------------
+            // EDIT
+            // --------------------------------------------------
+
+            if (
+                editingTradeId !==
+                null
+            ) {
+
+                const tradeIndex =
+                    trades.findIndex(
+                        function (existingTrade) {
+
+                            return (
+                                Number(
+                                    existingTrade.id
+                                ) ===
+                                Number(
+                                    editingTradeId
+                                )
+                            );
+
+                        }
+                    );
 
 
                 if (
-                    !selectedScreenshot
+                    tradeIndex !==
+                    -1
                 ) {
 
-                    trade.screenshot =
-                        trades[
-                            tradeIndex
-                        ].screenshot ||
-                        null;
+                    trade.id =
+                        editingTradeId;
+
+
+                    if (
+                        !selectedScreenshot
+                    ) {
+
+                        trade.screenshot =
+                            trades[
+                                tradeIndex
+                            ].screenshot ||
+                            null;
+
+                    }
+
+
+                    trades[
+                        tradeIndex
+                    ] = trade;
 
                 }
 
+            }
 
-                trades[
-                    tradeIndex
-                ] = trade;
+
+            // --------------------------------------------------
+            // NEW TRADE
+            // --------------------------------------------------
+
+            else {
+
+                trade.id =
+                    Date.now();
+
+
+                trades.push(
+                    trade
+                );
 
             }
 
-        }
 
-        // --------------------------------------------------
-        // NEW TRADE
-        // --------------------------------------------------
-
-        else {
-
-            trade.id =
-                Date.now();
-
-
-            trades.push(
-                trade
-            );
-
-        }
-
-
-        saveTrades(
-            trades
-        );
-
-
-        renderTrades();
-
-
-        updateJournalSummary();
-
-
-        tradeForm.reset();
-
-
-        selectedScreenshot =
-            null;
-
-
-        editingTradeId =
-            null;
-
-
-        document.getElementById(
-            "screenshot-preview"
-        ).src = "";
-
-
-        document.getElementById(
-            "screenshot-preview"
-        ).style.display =
-            "none";
-
-
-        const dropzone =
-            document.querySelector(
-                ".screenshot-dropzone"
+            saveTrades(
+                trades
             );
 
 
-        dropzone
-            .querySelector(
-                ".screenshot-upload-icon"
-            )
-            .textContent =
-            "+";
+            renderTrades();
+
+            updateJournalSummary();
+
+            updateJournalReflections();
 
 
-        dropzone
-            .querySelector(
-                "strong"
-            )
-            .textContent =
-            "Upload trade screenshot";
+            tradeForm.reset();
 
 
-        dropzone
-            .querySelector(
-                "small"
-            )
-            .textContent =
-            "PNG, JPG or WebP";
+            selectedScreenshot =
+                null;
 
 
-        closeTradeForm();
+            editingTradeId =
+                null;
 
-    }
-);
+
+            const screenshotPreview =
+                document.getElementById(
+                    "screenshot-preview"
+                );
+
+
+            if (screenshotPreview) {
+
+                screenshotPreview.src =
+                    "";
+
+                screenshotPreview.style.display =
+                    "none";
+
+            }
+
+
+            const dropzone =
+                document.querySelector(
+                    ".screenshot-dropzone"
+                );
+
+
+            if (dropzone) {
+
+                const icon =
+                    dropzone.querySelector(
+                        ".screenshot-upload-icon"
+                    );
+
+                const strong =
+                    dropzone.querySelector(
+                        "strong"
+                    );
+
+                const small =
+                    dropzone.querySelector(
+                        "small"
+                    );
+
+
+                if (icon) {
+                    icon.textContent =
+                        "+";
+                }
+
+                if (strong) {
+                    strong.textContent =
+                        "Upload trade screenshot";
+                }
+
+                if (small) {
+                    small.textContent =
+                        "PNG, JPG or WebP";
+                }
+
+            }
+
+
+            closeTradeForm();
+
+        }
+    );
+
+}
 
 
 // ======================================================
@@ -1251,74 +1372,73 @@ function editTrade(
     document.getElementById(
         "trade-pair"
     ).value =
-        trade.pair;
+        trade.pair || "";
 
 
     document.getElementById(
         "trade-direction"
     ).value =
-        trade.direction;
+        trade.direction || "";
 
 
     document.getElementById(
         "trade-date"
     ).value =
-        trade.date;
+        trade.date || "";
 
 
     document.getElementById(
         "trade-time"
     ).value =
-        trade.time;
+        trade.time || "";
 
 
     document.getElementById(
         "trade-setup"
     ).value =
-        trade.setup;
+        trade.setup || "";
 
 
     document.getElementById(
         "trade-entry"
     ).value =
-        trade.entry;
+        trade.entry || "";
 
 
     document.getElementById(
         "trade-stop"
     ).value =
-        trade.stopLoss;
+        trade.stopLoss || "";
 
 
     document.getElementById(
         "trade-target"
     ).value =
-        trade.takeProfit;
+        trade.takeProfit || "";
 
 
     document.getElementById(
         "trade-risk"
     ).value =
-        trade.risk;
+        trade.risk || "";
 
 
     document.getElementById(
         "trade-outcome"
     ).value =
-        trade.outcome ||
-        "";
+        trade.outcome || "";
 
 
     document.getElementById(
         "trade-result"
     ).value =
-        trade.result;
+        trade.result || "";
 
 
     document.getElementById(
         "trade-notes"
     ).value =
-        trade.notes;
+        trade.notes || "";
 
 
     if (trade.screenshot) {
@@ -1333,12 +1453,20 @@ function editTrade(
             );
 
 
-        preview.src =
-            trade.screenshot;
+        if (preview) {
 
+            preview.src =
+                trade.screenshot;
 
-        preview.style.display =
-            "block";
+            preview.style.display =
+                "block";
+
+        }
+
+    } else {
+
+        selectedScreenshot =
+            null;
 
     }
 
@@ -1408,18 +1536,6 @@ const deleteConfirmButton =
     );
 
 
-deleteCancelButton.addEventListener(
-    "click",
-    closeDeleteModal
-);
-
-
-deleteConfirmButton.addEventListener(
-    "click",
-    deleteTrade
-);
-
-
 let tradeToDeleteId =
     null;
 
@@ -1440,6 +1556,11 @@ function openDeleteModal(
         );
 
 
+    if (!deleteModal) {
+        return;
+    }
+
+
     deleteModal.classList.add(
         "is-visible"
     );
@@ -1457,6 +1578,11 @@ function closeDeleteModal() {
         document.getElementById(
             "trade-delete-modal"
         );
+
+
+    if (!deleteModal) {
+        return;
+    }
 
 
     deleteModal.classList.remove(
@@ -1503,11 +1629,32 @@ function deleteTrade() {
 
     renderTrades();
 
-
     updateJournalSummary();
+
+    updateJournalReflections();
 
 
     closeDeleteModal();
+
+}
+
+
+if (deleteCancelButton) {
+
+    deleteCancelButton.addEventListener(
+        "click",
+        closeDeleteModal
+    );
+
+}
+
+
+if (deleteConfirmButton) {
+
+    deleteConfirmButton.addEventListener(
+        "click",
+        deleteTrade
+    );
 
 }
 
@@ -1566,6 +1713,15 @@ function openScreenshotViewer(
     }
 
 
+    if (
+        !screenshotViewer ||
+        !screenshotModal
+    ) {
+
+        return;
+    }
+
+
     screenshotViewer.src =
         trade.screenshot;
 
@@ -1579,13 +1735,22 @@ function openScreenshotViewer(
 
 function closeScreenshotViewer() {
 
+    if (!screenshotModal) {
+        return;
+    }
+
+
     screenshotModal.classList.remove(
         "is-visible"
     );
 
 
-    screenshotViewer.src =
-        "";
+    if (screenshotViewer) {
+
+        screenshotViewer.src =
+            "";
+
+    }
 
 }
 
@@ -1616,27 +1781,35 @@ document.addEventListener(
 );
 
 
-screenshotCloseButton.addEventListener(
-    "click",
-    closeScreenshotViewer
-);
+if (screenshotCloseButton) {
+
+    screenshotCloseButton.addEventListener(
+        "click",
+        closeScreenshotViewer
+    );
+
+}
 
 
-screenshotModal.addEventListener(
-    "click",
-    function (event) {
+if (screenshotModal) {
 
-        if (
-            event.target ===
-            screenshotModal
-        ) {
+    screenshotModal.addEventListener(
+        "click",
+        function (event) {
 
-            closeScreenshotViewer();
+            if (
+                event.target ===
+                screenshotModal
+            ) {
+
+                closeScreenshotViewer();
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
 // ======================================================
@@ -1668,6 +1841,17 @@ function updateJournalSummary() {
         document.getElementById(
             "journal-average-r"
         );
+
+
+    if (
+        !totalTradesElement ||
+        !winRateElement ||
+        !netResultElement ||
+        !averageRElement
+    ) {
+
+        return;
+    }
 
 
     const totalTrades =
@@ -1862,6 +2046,14 @@ function getFilteredTrades() {
         );
 
 
+    const startOfLastMonth =
+        new Date(
+            today.getFullYear(),
+            today.getMonth() - 1,
+            1
+        );
+
+
     const startOfThisMonth =
         new Date(
             today.getFullYear(),
@@ -1874,14 +2066,6 @@ function getFilteredTrades() {
         new Date(
             today.getFullYear(),
             today.getMonth() + 1,
-            1
-        );
-
-
-    const startOfLastMonth =
-        new Date(
-            today.getFullYear(),
-            today.getMonth() - 1,
             1
         );
 
@@ -2038,11 +2222,516 @@ journalFilterButtons.forEach(
 
                 updateJournalSummary();
 
+                updateJournalReflections();
+
             }
         );
 
     }
 );
+
+
+// ======================================================
+// PDF REFLECTION STYLES
+// ======================================================
+
+function ensurePdfReflectionStyles() {
+
+    if (
+        document.getElementById(
+            "traders-lab-pdf-reflection-styles"
+        )
+    ) {
+
+        return;
+    }
+
+
+    const style =
+        document.createElement(
+            "style"
+        );
+
+
+    style.id =
+        "traders-lab-pdf-reflection-styles";
+
+
+    style.textContent = `
+        .pdf-reflections-section {
+            margin-top: 32px;
+        }
+
+        .pdf-reflections-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .pdf-reflection-item {
+            padding: 16px 18px;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            background: #fafafa;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .pdf-reflection-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 7px;
+        }
+
+        .pdf-reflection-trade {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pdf-reflection-trade strong {
+            font-size: 13px;
+        }
+
+        .pdf-reflection-trade span {
+            font-size: 10px;
+            color: #666;
+        }
+
+        .pdf-reflection-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 10px;
+            color: #777;
+        }
+
+        .pdf-reflection-note {
+            margin: 0;
+            padding: 12px 14px;
+            border-left: 2px solid #cfd3d8;
+            background: #fff;
+            font-size: 11px;
+            line-height: 1.7;
+            color: #333;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .pdf-reflection-result {
+            flex-shrink: 0;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .pdf-reflection-result.profit {
+            color: #16794c;
+        }
+
+        .pdf-reflection-result.loss {
+            color: #b42318;
+        }
+
+        .pdf-reflection-result.neutral {
+            color: #777;
+        }
+
+        .pdf-reflection-empty {
+            margin: 0;
+            padding: 18px;
+            border: 1px dashed #d8dce1;
+            color: #777;
+            font-size: 11px;
+        }
+
+        @media print {
+
+            .pdf-reflections-section {
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+
+            .pdf-reflection-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+        }
+    `;
+
+
+    document.head.appendChild(
+        style
+    );
+
+}
+
+
+// ======================================================
+// CREATE PDF REFLECTION CONTAINER
+// ======================================================
+
+function getPdfReflectionsList() {
+
+    let reflectionSection =
+        document.getElementById(
+            "pdf-reflections-section"
+        );
+
+
+    let reflectionList =
+        document.getElementById(
+            "pdf-reflections-list"
+        );
+
+
+    if (
+        reflectionSection &&
+        reflectionList
+    ) {
+
+        return reflectionList;
+
+    }
+
+
+    const pdfReport =
+        document.getElementById(
+            "journal-pdf-report"
+        );
+
+
+    if (!pdfReport) {
+        return null;
+    }
+
+
+    ensurePdfReflectionStyles();
+
+
+    reflectionSection =
+        document.createElement(
+            "div"
+        );
+
+
+    reflectionSection.id =
+        "pdf-reflections-section";
+
+
+    reflectionSection.className =
+        "pdf-report-section pdf-reflections-section";
+
+
+    reflectionSection.innerHTML = `
+        <div class="pdf-section-heading">
+            <span>02</span>
+            <h2>Journal Reflections</h2>
+        </div>
+
+        <div
+            class="pdf-reflections-list"
+            id="pdf-reflections-list"
+        ></div>
+    `;
+
+
+    const footer =
+        pdfReport.querySelector(
+            ".pdf-report-footer"
+        );
+
+
+    if (footer) {
+
+        pdfReport.insertBefore(
+            reflectionSection,
+            footer
+        );
+
+    } else {
+
+        pdfReport.appendChild(
+            reflectionSection
+        );
+
+    }
+
+
+    reflectionList =
+        document.getElementById(
+            "pdf-reflections-list"
+        );
+
+
+    return reflectionList || null;
+
+}
+
+
+// ======================================================
+// RENDER PDF REFLECTIONS
+// ======================================================
+
+function renderPdfReflections(
+    trades
+) {
+
+    const reflectionList =
+        getPdfReflectionsList();
+
+
+    if (!reflectionList) {
+        return;
+    }
+
+
+    reflectionList.innerHTML =
+        "";
+
+
+    const reflectionTrades =
+        trades.filter(
+            function (trade) {
+
+                return (
+                    typeof trade.notes ===
+                        "string" &&
+                    trade.notes.trim().length >
+                        0
+                );
+
+            }
+        );
+
+
+    if (
+        reflectionTrades.length ===
+        0
+    ) {
+
+        const emptyMessage =
+            document.createElement(
+                "p"
+            );
+
+
+        emptyMessage.className =
+            "pdf-reflection-empty";
+
+
+        emptyMessage.textContent =
+            "No written reflections were recorded for this period.";
+
+
+        reflectionList.appendChild(
+            emptyMessage
+        );
+
+
+        return;
+    }
+
+
+    reflectionTrades.forEach(
+        function (trade) {
+
+            const reflection =
+                document.createElement(
+                    "article"
+                );
+
+
+            reflection.className =
+                "pdf-reflection-item";
+
+
+            const meta =
+                document.createElement(
+                    "div"
+                );
+
+
+            meta.className =
+                "pdf-reflection-meta";
+
+
+            const tradeInfo =
+                document.createElement(
+                    "div"
+                );
+
+
+            tradeInfo.className =
+                "pdf-reflection-trade";
+
+
+            const pair =
+                document.createElement(
+                    "strong"
+                );
+
+
+            pair.textContent =
+                trade.pair || "—";
+
+
+            const direction =
+                document.createElement(
+                    "span"
+                );
+
+
+            direction.textContent =
+                trade.direction || "—";
+
+
+            const outcome =
+                document.createElement(
+                    "span"
+                );
+
+
+            outcome.textContent =
+                trade.outcome || "—";
+
+
+            tradeInfo.appendChild(
+                pair
+            );
+
+            tradeInfo.appendChild(
+                direction
+            );
+
+            tradeInfo.appendChild(
+                outcome
+            );
+
+
+            const result =
+                Number(
+                    trade.result || 0
+                );
+
+
+            const resultElement =
+                document.createElement(
+                    "span"
+                );
+
+
+            resultElement.className =
+                "pdf-reflection-result " +
+                (
+                    result > 0
+                        ? "profit"
+                        : result < 0
+                            ? "loss"
+                            : "neutral"
+                );
+
+
+            resultElement.textContent =
+                `${
+                    result > 0
+                        ? "+"
+                        : ""
+                }${trade.result || 0}R`;
+
+
+            meta.appendChild(
+                tradeInfo
+            );
+
+            meta.appendChild(
+                resultElement
+            );
+
+
+            const details =
+                document.createElement(
+                    "div"
+                );
+
+
+            details.className =
+                "pdf-reflection-details";
+
+
+            const date =
+                document.createElement(
+                    "span"
+                );
+
+
+            date.textContent =
+                trade.date || "—";
+
+
+            details.appendChild(
+                date
+            );
+
+
+            if (trade.setup) {
+
+                const setup =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                setup.textContent =
+                    trade.setup;
+
+
+                details.appendChild(
+                    setup
+                );
+
+            }
+
+
+            const note =
+                document.createElement(
+                    "p"
+                );
+
+
+            note.className =
+                "pdf-reflection-note";
+
+
+            note.textContent =
+                trade.notes.trim();
+
+
+            reflection.appendChild(
+                meta
+            );
+
+            reflection.appendChild(
+                details
+            );
+
+            reflection.appendChild(
+                note
+            );
+
+
+            reflectionList.appendChild(
+                reflection
+            );
+
+        }
+    );
+
+}
 
 
 // ======================================================
@@ -2111,6 +2800,24 @@ function exportJournalPdf(
         document.getElementById(
             "pdf-report-generated-date"
         );
+
+
+    if (
+        !pdfTotalTrades ||
+        !pdfWinRate ||
+        !pdfNetResult ||
+        !pdfAverageR ||
+        !pdfTradeTableBody ||
+        !pdfReportPeriod ||
+        !pdfGeneratedDate
+    ) {
+
+        console.error(
+            "PDF report elements are missing."
+        );
+
+        return;
+    }
 
 
     const wins =
@@ -2233,6 +2940,10 @@ function exportJournalPdf(
         }${averageR.toFixed(2)}R`;
 
 
+    // --------------------------------------------------
+    // TRADE HISTORY
+    // --------------------------------------------------
+
     pdfTradeTableBody.innerHTML =
         "";
 
@@ -2246,27 +2957,94 @@ function exportJournalPdf(
                 );
 
 
-            row.innerHTML = `
-                <td>${trade.date || "—"}</td>
+            const dateCell =
+                document.createElement(
+                    "td"
+                );
 
-                <td>${trade.pair || "—"}</td>
+            dateCell.textContent =
+                trade.date || "—";
 
-                <td>${trade.direction || "—"}</td>
 
-                <td>${trade.setup || "—"}</td>
+            const pairCell =
+                document.createElement(
+                    "td"
+                );
 
-                <td>${trade.outcome || "—"}</td>
+            pairCell.textContent =
+                trade.pair || "—";
 
-                <td>
-                    ${
-                        Number(
-                            trade.result || 0
-                        ) > 0
-                            ? "+"
-                            : ""
-                    }${trade.result || 0}R
-                </td>
-            `;
+
+            const directionCell =
+                document.createElement(
+                    "td"
+                );
+
+            directionCell.textContent =
+                trade.direction || "—";
+
+
+            const setupCell =
+                document.createElement(
+                    "td"
+                );
+
+            setupCell.textContent =
+                trade.setup || "—";
+
+
+            const outcomeCell =
+                document.createElement(
+                    "td"
+                );
+
+            outcomeCell.textContent =
+                trade.outcome || "—";
+
+
+            const resultCell =
+                document.createElement(
+                    "td"
+                );
+
+
+            const numericResult =
+                Number(
+                    trade.result || 0
+                );
+
+
+            resultCell.textContent =
+                `${
+                    numericResult > 0
+                        ? "+"
+                        : ""
+                }${trade.result || 0}R`;
+
+
+            row.appendChild(
+                dateCell
+            );
+
+            row.appendChild(
+                pairCell
+            );
+
+            row.appendChild(
+                directionCell
+            );
+
+            row.appendChild(
+                setupCell
+            );
+
+            row.appendChild(
+                outcomeCell
+            );
+
+            row.appendChild(
+                resultCell
+            );
 
 
             pdfTradeTableBody.appendChild(
@@ -2276,6 +3054,19 @@ function exportJournalPdf(
         }
     );
 
+
+    // --------------------------------------------------
+    // JOURNAL REFLECTIONS
+    // --------------------------------------------------
+
+    renderPdfReflections(
+        trades
+    );
+
+
+    // --------------------------------------------------
+    // PRINT
+    // --------------------------------------------------
 
     window.print();
 
@@ -2299,9 +3090,335 @@ if (exportPdfButton) {
 
 
 // ======================================================
+// JOURNAL REFLECTIONS
+// ======================================================
+
+function updateJournalReflections() {
+
+    const trades =
+        getFilteredTrades();
+
+
+    const entriesElement =
+        document.getElementById(
+            "journal-reflection-entries"
+        );
+
+    const wordCountElement =
+        document.getElementById(
+            "journal-reflection-word-count"
+        );
+
+    const reflectionList =
+        document.getElementById(
+            "journal-reflection-list"
+        );
+
+    const emptyState =
+        document.getElementById(
+            "journal-reflection-empty"
+        );
+
+
+    if (
+        !entriesElement ||
+        !wordCountElement ||
+        !reflectionList ||
+        !emptyState
+    ) {
+
+        return;
+    }
+
+
+    const reflectionTrades =
+        trades.filter(
+            function (trade) {
+
+                return (
+                    typeof trade.notes ===
+                        "string" &&
+                    trade.notes.trim().length >
+                        0
+                );
+
+            }
+        );
+
+
+    // --------------------------------------------------
+    // SUMMARY
+    // --------------------------------------------------
+
+    const totalWords =
+        reflectionTrades.reduce(
+            function (
+                total,
+                trade
+            ) {
+
+                return (
+                    total +
+                    trade.notes
+                        .trim()
+                        .split(/\s+/)
+                        .filter(
+                            function (word) {
+
+                                return (
+                                    word.length >
+                                    0
+                                );
+
+                            }
+                        )
+                        .length
+                );
+
+            },
+            0
+        );
+
+
+    entriesElement.textContent =
+        reflectionTrades.length;
+
+
+    wordCountElement.textContent =
+        totalWords;
+
+
+    // --------------------------------------------------
+    // EMPTY STATE
+    // --------------------------------------------------
+
+    reflectionList.innerHTML =
+        "";
+
+
+    if (
+        reflectionTrades.length ===
+        0
+    ) {
+
+        emptyState.style.display =
+            "block";
+
+        return;
+    }
+
+
+    emptyState.style.display =
+        "none";
+
+
+    // --------------------------------------------------
+    // RENDER REFLECTIONS
+    // --------------------------------------------------
+
+    reflectionTrades.forEach(
+        function (trade) {
+
+            const reflection =
+                document.createElement(
+                    "article"
+                );
+
+
+            reflection.className =
+                "journal-reflection-item";
+
+
+            const meta =
+                document.createElement(
+                    "div"
+                );
+
+
+            meta.className =
+                "journal-reflection-meta";
+
+
+            const tradeInfo =
+                document.createElement(
+                    "div"
+                );
+
+
+            tradeInfo.className =
+                "journal-reflection-trade";
+
+
+            const pair =
+                document.createElement(
+                    "strong"
+                );
+
+
+            pair.textContent =
+                trade.pair || "—";
+
+
+            const direction =
+                document.createElement(
+                    "span"
+                );
+
+
+            direction.textContent =
+                trade.direction || "—";
+
+
+            const outcome =
+                document.createElement(
+                    "span"
+                );
+
+
+            outcome.textContent =
+                trade.outcome || "—";
+
+
+            tradeInfo.appendChild(
+                pair
+            );
+
+            tradeInfo.appendChild(
+                direction
+            );
+
+            tradeInfo.appendChild(
+                outcome
+            );
+
+
+            const result =
+                Number(
+                    trade.result || 0
+                );
+
+
+            const resultElement =
+                document.createElement(
+                    "div"
+                );
+
+
+            resultElement.className =
+                "journal-reflection-result " +
+                (
+                    result > 0
+                        ? "profit"
+                        : result < 0
+                            ? "loss"
+                            : "neutral"
+                );
+
+
+            resultElement.textContent =
+                `${
+                    result > 0
+                        ? "+"
+                        : ""
+                }${trade.result || 0}R`;
+
+
+            meta.appendChild(
+                tradeInfo
+            );
+
+            meta.appendChild(
+                resultElement
+            );
+
+
+            const details =
+                document.createElement(
+                    "div"
+                );
+
+
+            details.className =
+                "journal-reflection-details";
+
+
+            const date =
+                document.createElement(
+                    "span"
+                );
+
+
+            date.textContent =
+                trade.date || "—";
+
+
+            details.appendChild(
+                date
+            );
+
+
+            if (trade.setup) {
+
+                const setup =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                setup.textContent =
+                    trade.setup;
+
+
+                details.appendChild(
+                    setup
+                );
+
+            }
+
+
+            const note =
+                document.createElement(
+                    "blockquote"
+                );
+
+
+            note.className =
+                "journal-reflection-note";
+
+
+            note.textContent =
+                trade.notes.trim();
+
+
+            reflection.appendChild(
+                meta
+            );
+
+            reflection.appendChild(
+                details
+            );
+
+            reflection.appendChild(
+                note
+            );
+
+
+            reflectionList.appendChild(
+                reflection
+            );
+
+        }
+    );
+
+}
+
+
+// ======================================================
 // INITIAL RENDER
 // ======================================================
 
 renderTrades();
 
 updateJournalSummary();
+
+updateJournalReflections();
