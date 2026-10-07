@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard — Traders Lab</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="app-page">
+
+    <div class="app-layout">
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+
+            <div class="sidebar-top">
+
+                <a href="dashboard.html" class="app-logo">
+                    TRADERS LAB
+                </a>
+
+                <nav class="app-nav">
+
+                    <a href="dashboard.html" class="app-nav-link active">
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="journal.html" class="app-nav-link">
+                        <span>Journal</span>
+                    </a>
+
+                    <a href="performance.html" class="app-nav-link">
+                        <span>Performance</span>
+                    </a>
+
+                    <a href="analytics.html" class="app-nav-link">
+                        <span>Analytics</span>
+                    </a>
+
+                    <a href="team.html" class="app-nav-link">
+                        <span>Team</span>
+                    </a>
+
+                    <a href="settings.html" class="app-nav-link">
+                        <span>Settings</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-user">
+
+                    <div class="user-avatar" id="sidebar-user-avatar">
+                        E
+                    </div>
+
+                    <div class="user-info">
+                        <strong id="sidebar-user-name">Enummanuel</strong>
+                        <span>Trader</span>
+                    </div>
+
+                </div>
+
+                <a href="index.html" class="logout-link" id="logout-link">
+                    Log out
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main application -->
+        <main class="app-main">
+
+            <div class="dashboard-content">
+
+                <!-- Header -->
+                <header class="dashboard-header">
+
+                    <div class="dashboard-heading">
+
+                        <span class="app-eyebrow">
+                            TRADING WORKSPACE
+                        </span>
+
+                        <h1>
+                            Good morning, <span id="dashboard-user-name">Enummanuel</span>.
+                        </h1>
+
+                        <p>
+                            Your trading process, at a glance.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dashboard-period">
+
+                        <span>
+                            PERFORMANCE
+                        </span>
+
+                        <strong id="dashboard-period-label">
+                            September 2026
+                        </strong>
+                    </div>
+
+                </header>
+
+
+                <!-- Main performance hero -->
+                <section class="performance-hero">
+
+    <div class="performance-hero-content">
+
+        <div class="performance-label">
+            NET PERFORMANCE
+        </div>
+
+        <div class="performance-value" id="net-performance">
+            0R
+        </div>
+
+        <div class="performance-change">
+
+            <span id="performance-change-value">
+                —
+            </span>
+
+            <span class="change-dot">
+                •
+            </span>
+
+            <span id="performance-change-label">
+                vs. previous period
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="performance-chart">
+
+        <div class="chart-grid chart-grid-one"></div>
+        <div class="chart-grid chart-grid-two"></div>
+        <div class="chart-grid chart-grid-three"></div>
+
+        <svg
+            viewBox="0 0 700 220"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+        >
+
+            <defs>
+
+                <linearGradient
+                    id="performanceFill"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                >
+
+                    <stop
+                        offset="0%"
+                        stop-opacity="0.14"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-opacity="0"
+                    />
+
+                </linearGradient>
+
+            </defs>
+
+
+            <path
+                class="chart-area"
+                d="M0 185
+                   C45 180, 65 165, 105 170
+                   S145 135, 180 145
+                   S225 115, 260 128
+                   S305 110, 335 115
+                   S375 78, 410 92
+                   S450 70, 485 82
+                   S525 52, 555 65
+                   S600 35, 625 48
+                   S670 25, 700 32
+                   L700 220
+                   L0 220 Z"
+            />
+
+            <path
+                class="chart-line"
+                d="M0 185
+                   C45 180, 65 165, 105 170
+                   S145 135, 180 145
+                   S225 115, 260 128
+                   S305 110, 335 115
+                   S375 78, 410 92
+                   S450 70, 485 82
+                   S525 52, 555 65
+                   S600 35, 625 48
+                   S670 25, 700 32"
+            />
+
+            <circle
+                class="chart-point"
+                cx="700"
+                cy="32"
+                r="5"
+            />
+
+        </svg>
+
+    </div>
+
+
+    <div class="performance-period">
+
+        <span
+            class="period-active"
+            data-period="1M"
+        >
+            1M
+        </span>
+
+        <span data-period="3M">
+            3M
+        </span>
+
+        <span data-period="6M">
+            6M
+        </span>
+
+        <span data-period="1Y">
+            1Y
+        </span>
+
+        <span data-period="ALL">
+            ALL
+        </span>
+
+    </div>
+
+</section>
+
+                <!-- Performance metrics -->
+<section class="metric-grid">
+
+    <article class="metric-card">
+
+        <span class="metric-label">
+            WIN RATE
+        </span>
+
+        <strong
+            class="metric-value"
+            id="dashboard-win-rate"
+        >
+            0%
+        </strong>
+
+        <span class="metric-meta positive">
+            Current period
+        </span>
+
+    </article>
+
+
+    <article class="metric-card">
+
+        <span class="metric-label">
+            AVERAGE R
+        </span>
+
+        <strong
+            class="metric-value"
+            id="dashboard-average-r"
+        >
+            0R
+        </strong>
+
+        <span class="metric-meta positive">
+            Per trade
+        </span>
+
+    </article>
+
+
+    <article class="metric-card">
+
+        <span class="metric-label">
+            PROFIT
+        </span>
+
+        <strong class="metric-value">
+            —
+        </strong>
+
+        <span class="metric-meta">
+            R-based tracking
+        </span>
+
+    </article>
+
+
+    <article class="metric-card">
+
+        <span class="metric-label">
+            TRADES
+        </span>
+
+        <strong
+            class="metric-value"
+            id="dashboard-total-trades"
+        >
+            0
+        </strong>
+
+        <span
+            class="metric-meta"
+            id="dashboard-trade-breakdown"
+        >
+            0W · 0L
+        </span>
+
+    </article>
+
+</section>
+
+
+                <!-- Dashboard lower area -->
+<!-- Daily performance + trading pulse -->
+<section class="dashboard-activity">
+
+    <!-- Daily Performance -->
+    <div class="daily-performance panel">
+
+        <div class="panel-header">
+
+            <div>
+                <span class="app-eyebrow">
+                    DAILY PERFORMANCE
+                </span>
+
+                <h2 id="daily-performance-month">
+                    September 2026
+                </h2>
+            </div>
+
+            <a href="performance.html" class="panel-action">
+                View all
+            </a>
+
+        </div>
+
+
+<div class="performance-calendar">
+
+    <div class="calendar-weekdays">
+        <span>MON</span>
+        <span>TUE</span>
+        <span>WED</span>
+        <span>THU</span>
+        <span>FRI</span>
+        <span>SAT</span>
+        <span>SUN</span>
+    </div>
+
+    <div class="calendar-grid" id="performance-calendar-grid">
+        <!-- Calendar generated by JavaScript -->
+    </div>
+
+</div>
+</div>
+
+
+    <!-- Trading Pulse -->
+    <aside class="trading-pulse panel">
+
+        <div class="panel-header">
+
+            <div>
+                <span class="app-eyebrow">
+                    TRADING PULSE
+                </span>
+
+                <h2>
+                    Your process is improving.
+                </h2>
+            </div>
+
+            <div class="pulse-indicator"></div>
+
+        </div>
+
+
+        <div class="pulse-summary">
+
+            <span>
+                CURRENT STREAK
+            </span>
+
+            <strong id="pulse-current-streak">
+                0 winning days
+            </strong>
+
+            <p id="pulse-streak-message">
+                Your trading performance will appear here as you record trades.
+            </p>
+
+        </div>
+
+
+        <div class="pulse-stats">
+
+            <div class="pulse-stat">
+
+                <span>WIN RATE</span>
+
+                <strong id="pulse-win-rate">0%</strong>
+
+                <small id="pulse-win-rate-meta">
+                    Current
+                </small>
+
+            </div>
+
+
+            <div class="pulse-stat">
+
+                <span>AVERAGE R</span>
+
+                <strong id="pulse-average-r">0R</strong>
+
+                <small id="pulse-average-r-meta">
+                    Per trade
+                </small>
+
+            </div>
+
+
+            <div class="pulse-stat">
+
+                <span>BEST PAIR</span>
+
+                <strong id="pulse-best-pair">—</strong>
+
+                <small id="pulse-best-pair-result">
+                    0R
+                </small>
+
+            </div>
+
+
+            <div class="pulse-stat">
+
+                <span>TOP SETUP</span>
+
+                <strong id="pulse-top-setup">—</strong>
+
+                <small id="pulse-top-setup-rate">
+                    0% win rate
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="pulse-footer">
+
+            <span>
+                Based on your recorded performance
+            </span>
+
+            <span class="pulse-arrow">
+                →
+            </span>
+
+        </div>
+
+    </aside>
+
+</section>
+
+
+<!-- Recent trades + pair performance -->
+<section class="dashboard-trades">
+
+    <!-- Recent Trades -->
+    <div class="recent-trades panel">
+
+        <div class="panel-header">
+
+            <div>
+                <span class="app-eyebrow">
+                    RECENT TRADES
+                </span>
+
+                <h2>
+                    Latest activity
+                </h2>
+            </div>
+
+            <a href="journal.html" class="panel-action">
+                View journal
+            </a>
+
+        </div>
+
+
+        <div class="trade-list">
+
+            <!-- Trade 1 -->
+            <div class="trade-row">
+
+                <div class="trade-symbol">
+                    <div class="trade-pair">
+                        GJ
+                    </div>
+
+                    <span>
+                        GBPJPY
+                    </span>
+                </div>
+
+
+                <div class="trade-direction buy">
+                    BUY
+                </div>
+
+
+                <div class="trade-setup">
+                    <span>Valid Setup</span>
+                    <small>Sep 30 · 09:42</small>
+                </div>
+
+
+                <div class="trade-result positive">
+                    +2.0R
+                </div>
+
+            </div>
+
+
+            <!-- Trade 2 -->
+            <div class="trade-row">
+
+                <div class="trade-symbol">
+                    <div class="trade-pair">
+                        XAU
+                    </div>
+
+                    <span>
+                        XAUUSD
+                    </span>
+                </div>
+
+
+                <div class="trade-direction sell">
+                    SELL
+                </div>
+
+
+                <div class="trade-setup">
+                    <span>Execution Error</span>
+                    <small>Sep 29 · 14:16</small>
+                </div>
+
+
+                <div class="trade-result negative">
+                    -1.0R
+                </div>
+
+            </div>
+
+
+            <!-- Trade 3 -->
+            <div class="trade-row">
+
+                <div class="trade-symbol">
+                    <div class="trade-pair">
+                        GU
+                    </div>
+
+                    <span>
+                        GBPUSD
+                    </span>
+                </div>
+
+
+                <div class="trade-direction buy">
+                    BUY
+                </div>
+
+
+                <div class="trade-setup">
+                    <span>Continuation</span>
+                    <small>Sep 29 · 10:21</small>
+                </div>
+
+
+                <div class="trade-result positive">
+                    +1.5R
+                </div>
+
+            </div>
+
+
+            <!-- Trade 4 -->
+            <div class="trade-row">
+
+                <div class="trade-symbol">
+                    <div class="trade-pair">
+                        EU
+                    </div>
+
+                    <span>
+                        EURUSD
+                    </span>
+                </div>
+
+
+                <div class="trade-direction sell">
+                    SELL
+                </div>
+
+
+                <div class="trade-setup">
+                    <span>Continuation</span>
+                    <small>Sep 28 · 15:03</small>
+                </div>
+
+
+                <div class="trade-result positive">
+                    +2.4R
+                </div>
+
+            </div>
+
+
+            <!-- Trade 5 -->
+            <div class="trade-row">
+
+                <div class="trade-symbol">
+                    <div class="trade-pair">
+                        GJ
+                    </div>
+
+                    <span>
+                        GBPJPY
+                    </span>
+                </div>
+
+
+                <div class="trade-direction sell">
+                    SELL
+                </div>
+
+
+                <div class="trade-setup">
+                    <span>Liquidity Sweep</span>
+                    <small>Sep 27 · 08:54</small>
+                </div>
+
+
+                <div class="trade-result negative">
+                    -1.0R
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Pair Performance -->
+    <div class="pair-performance panel">
+
+        <div class="panel-header">
+
+            <div>
+                <span class="app-eyebrow">
+                    PAIR PERFORMANCE
+                </span>
+
+                <h2>
+                    Where your edge performs
+                </h2>
+            </div>
+
+            <a href="performance.html" class="panel-action">
+                Details
+            </a>
+
+        </div>
+
+
+        <div class="pair-list">
+
+            <!-- GBPJPY -->
+            <div class="pair-item">
+
+                <div class="pair-info">
+
+                    <div>
+                        <strong>GBPJPY</strong>
+                        <span>14 trades · 71% win rate</span>
+                    </div>
+
+                    <strong class="pair-result positive">
+                        +8.4R
+                    </strong>
+
+                </div>
+
+
+                <div class="pair-bar">
+
+                    <span
+                        class="pair-bar-fill positive-fill"
+                        style="width: 86%;"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+            <!-- EURUSD -->
+            <div class="pair-item">
+
+                <div class="pair-info">
+
+                    <div>
+                        <strong>EURUSD</strong>
+                        <span>11 trades · 64% win rate</span>
+                    </div>
+
+                    <strong class="pair-result positive">
+                        +5.1R
+                    </strong>
+
+                </div>
+
+
+                <div class="pair-bar">
+
+                    <span
+                        class="pair-bar-fill positive-fill"
+                        style="width: 67%;"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+            <!-- GBPUSD -->
+            <div class="pair-item">
+
+                <div class="pair-info">
+
+                    <div>
+                        <strong>GBPUSD</strong>
+                        <span>9 trades · 56% win rate</span>
+                    </div>
+
+                    <strong class="pair-result positive">
+                        +2.8R
+                    </strong>
+
+                </div>
+
+
+                <div class="pair-bar">
+
+                    <span
+                        class="pair-bar-fill positive-fill"
+                        style="width: 45%;"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+            <!-- XAUUSD -->
+            <div class="pair-item">
+
+                <div class="pair-info">
+
+                    <div>
+                        <strong>XAUUSD</strong>
+                        <span>9 trades · 33% win rate</span>
+                    </div>
+
+                    <strong class="pair-result negative">
+                        -1.2R
+                    </strong>
+
+                </div>
+
+
+                <div class="pair-bar">
+
+                    <span
+                        class="pair-bar-fill negative-fill"
+                        style="width: 25%;"
+                    ></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="pair-footer">
+
+            <span>
+                Showing all active pairs
+            </span>
+
+            <span id="pair-performance-period">
+                September 2026
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+<script src="js/auth.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

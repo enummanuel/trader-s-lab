@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings — Traders Lab</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="app-page">
+
+<div class="app-layout">
+
+    <!-- Sidebar -->
+        <aside class="app-sidebar">
+
+            <div class="sidebar-top">
+
+                <a href="dashboard.html" class="app-logo">
+                    TRADERS LAB
+                </a>
+
+                <nav class="app-nav">
+
+                    <a href="dashboard.html" class="app-nav-link">
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="journal.html" class="app-nav-link">
+                        <span>Journal</span>
+                    </a>
+
+                    <a href="performance.html" class="app-nav-link">
+                        <span>Performance</span>
+                    </a>
+
+                    <a href="analytics.html" class="app-nav-link active">
+                        <span>Analytics</span>
+                    </a>
+
+                    <a href="team.html" class="app-nav-link">
+                        <span>Team</span>
+                    </a>
+
+                    <a href="settings.html" class="app-nav-link">
+                        <span>Settings</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-user">
+
+                    <div class="user-avatar" id="sidebar-user-avatar">
+                        E
+                    </div>
+
+                    <div class="user-info">
+                        <strong id="sidebar-user-name">Enummanuel</strong>
+                        <span>Trader</span>
+                    </div>
+
+                </div>
+
+                <a href="index.html" class="logout-link">
+                    Log out
+                </a>
+
+            </div>
+
+        </aside>
+
+
+    <!-- Main -->
+    <main class="app-main">
+
+        <div class="settings-content">
+
+            <!-- Header -->
+            <header class="settings-page-header">
+
+                <div class="settings-heading">
+
+                    <span class="app-eyebrow">
+                        SETTINGS
+                    </span>
+
+                    <h1>
+                        Make Traders Lab work your way.
+                    </h1>
+
+                    <p>
+                        Manage your trading preferences, journal behavior,
+                        and local data.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+            <!-- Profile -->
+            <section class="settings-section panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="app-eyebrow">
+                            PROFILE
+                        </span>
+
+                        <h2>
+                            Your trader profile
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-profile">
+
+                    <div class="settings-profile-avatar">
+                        E
+                    </div>
+
+                    <div class="settings-profile-info">
+
+                        <strong>
+                            Enummanuel
+                        </strong>
+
+                        <span>
+                            Trader
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Account & Security -->
+            <section class="settings-section panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="app-eyebrow">
+                            ACCOUNT & SECURITY
+                        </span>
+
+                        <h2>
+                            Protect your account
+                        </h2>
+                    </div>
+
+                </div>
+
+                <form class="settings-password-form" id="change-password-form">
+
+                    <div class="settings-password-fields">
+
+                        <label class="settings-password-field">
+
+                            <span>
+                                Current password
+                            </span>
+
+                            <input
+                                type="password"
+                                id="current-password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                        </label>
+
+
+                        <label class="settings-password-field">
+
+                            <span>
+                                New password
+                            </span>
+
+                            <input
+                                type="password"
+                                id="new-password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                        </label>
+
+
+                        <label class="settings-password-field">
+
+                            <span>
+                                Confirm new password
+                            </span>
+
+                            <input
+                                type="password"
+                                id="confirm-password"
+                                autocomplete="new-password"
+                                minlength="8"
+                                required
+                            >
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="settings-password-footer">
+
+                        <p id="password-feedback" class="settings-password-feedback"></p>
+
+                        <button
+                            type="submit"
+                            class="app-button"
+                        >
+                            Change password
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- Trading Preferences -->
+            <section class="settings-section panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="app-eyebrow">
+                            TRADING
+                        </span>
+
+                        <h2>
+                            Trading preferences
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-fields">
+
+                    <div class="settings-field">
+
+                        <div class="settings-field-copy">
+
+                            <strong>
+                                Default risk
+                            </strong>
+
+                            <span>
+                                The risk percentage used when recording a new trade.
+                            </span>
+
+                        </div>
+
+                        <input
+                          type="number"
+                          class="settings-input"
+                          id="settings-default-risk"
+                          value="0.5"
+                          min="0"
+                          step="0.1"
+                        >
+
+                    </div>
+
+
+                    <div class="settings-field">
+
+                        <div class="settings-field-copy">
+
+                            <strong>
+                                Default trading session
+                            </strong>
+
+                            <span>
+                                Your preferred session when reviewing trades.
+                            </span>
+
+                        </div>
+
+                        <select
+                          class="settings-input"
+                          id="settings-default-session"
+                        > 
+
+                            <option>London</option>
+                            <option>New York</option>
+                            <option>Asia</option>
+                            <option>London + New York</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Journal Preferences -->
+            <section class="settings-section panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="app-eyebrow">
+                            JOURNAL
+                        </span>
+
+                        <h2>
+                            Journal preferences
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-options">
+
+                    <label class="settings-option">
+
+                        <div class="settings-option-copy">
+
+                            <strong>
+                                Confirm before deleting
+                            </strong>
+
+                            <span>
+                                Ask for confirmation before permanently deleting a trade.
+                            </span>
+
+                        </div>
+
+                        <input
+                          type="checkbox"
+                          id="settings-confirm-delete"
+                          checked
+                        >
+
+                    </label>
+
+
+                    <label class="settings-option">
+
+                        <div class="settings-option-copy">
+
+                            <strong>
+                                Show screenshots
+                            </strong>
+
+                            <span>
+                                Display trade screenshots inside your journal history.
+                            </span>
+
+                        </div>
+
+                        <input
+                            type="checkbox"
+                            id="settings-show-screenshots"
+                            checked
+                        >
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- Data -->
+            <section class="settings-section panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="app-eyebrow">
+                            DATA
+                        </span>
+
+                        <h2>
+                            Your journal data
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-data-actions">
+
+                    <button
+                        type="button"
+                        class="app-button"
+                        id="settings-export-pdf"
+                    >
+                        Export PDF
+                    </button>
+
+                    <button
+                        type="button"
+                        class="app-button secondary"
+                        id="settings-import-journal"
+                    >
+                        Import Journal
+                    </button>
+
+                    <input
+                        type="file"
+                        id="settings-import-file"
+                        accept=".json,application/json"
+                        hidden
+                    >
+
+                </div>
+
+
+                <div class="settings-danger">
+
+                    <div>
+
+                        <strong>
+                            Clear local data
+                        </strong>
+
+                        <span>
+                            Permanently remove your Traders Lab data from this browser.
+                        </span>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="settings-danger-button"
+                        id="open-clear-data"
+                    >
+                        Clear data
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- About -->
+            <section class="settings-section panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="app-eyebrow">
+                            ABOUT
+                        </span>
+
+                        <h2>
+                            Traders Lab
+                        </h2>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-about">
+
+                    <div>
+                        <span>VERSION</span>
+                        <strong>1.0</strong>
+                    </div>
+
+                    <div>
+                        <span>STORAGE</span>
+                        <strong>Local</strong>
+                    </div>
+
+                    <div>
+                        <span>STATUS</span>
+                        <strong>V1</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- Clear Data Modal -->
+<div class="settings-modal" id="clear-data-modal">
+
+    <div class="settings-modal-backdrop"></div>
+
+    <div
+        class="settings-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="clear-data-title"
+    >
+
+        <div class="settings-modal-content">
+
+            <span class="app-eyebrow">
+                CLEAR DATA
+            </span>
+
+            <h2 id="clear-data-title">
+                Delete your local data?
+            </h2>
+
+            <p>
+                This will permanently remove your journal trades,
+                screenshots, settings, and local password from this browser.
+                This action cannot be undone.
+            </p>
+
+        </div>
+
+
+        <div class="settings-modal-actions">
+
+            <button
+                type="button"
+                class="settings-modal-cancel"
+                id="cancel-clear-data"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="settings-modal-confirm"
+                id="confirm-clear-data"
+            >
+                Clear all data
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PDF Report -->
+<section class="journal-pdf-report" id="journal-pdf-report">
+
+    <div class="pdf-report-header">
+
+        <div>
+            <span class="app-eyebrow">
+                TRADERS LAB
+            </span>
+
+            <h1>
+                Trading Performance Report
+            </h1>
+
+            <p id="pdf-report-period">
+                All recorded trades
+            </p>
+        </div>
+
+        <div class="pdf-report-date">
+            <span>Generated</span>
+            <strong id="pdf-report-generated-date"></strong>
+        </div>
+
+    </div>
+
+
+    <div class="pdf-report-summary">
+
+        <div class="pdf-summary-item">
+            <span>Total Trades</span>
+            <strong id="pdf-total-trades">0</strong>
+        </div>
+
+        <div class="pdf-summary-item">
+            <span>Win Rate</span>
+            <strong id="pdf-win-rate">0%</strong>
+        </div>
+
+        <div class="pdf-summary-item">
+            <span>Net Result</span>
+            <strong id="pdf-net-result">0R</strong>
+        </div>
+
+        <div class="pdf-summary-item">
+            <span>Average R</span>
+            <strong id="pdf-average-r">0R</strong>
+        </div>
+
+    </div>
+
+
+    <div class="pdf-report-section">
+
+        <div class="pdf-section-heading">
+            <span>01</span>
+            <h2>Trade History</h2>
+        </div>
+
+        <table class="pdf-trade-table">
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Pair</th>
+                    <th>Direction</th>
+                    <th>Setup</th>
+                    <th>Outcome</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+
+            <tbody id="pdf-trade-table-body"></tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="pdf-report-footer">
+        <span>TRADERS LAB</span>
+        <span>Trading Performance Report</span>
+    </div>
+
+</section>
+
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="js/pdf-export.js"></script>
+<script src="js/settings.js"></script>
+
+</body>
+</html>

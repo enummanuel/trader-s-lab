@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Performance — Traders Lab</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body class="app-page">
+
+    <div class="app-layout">
+
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+
+            <div class="sidebar-top">
+
+                <a
+                    href="dashboard.html"
+                    class="app-logo"
+                >
+                    TRADERS LAB
+                </a>
+
+
+                <nav class="app-nav">
+
+                    <a
+                        href="dashboard.html"
+                        class="app-nav-link"
+                    >
+                        <span>Dashboard</span>
+                    </a>
+
+
+                    <a
+                        href="journal.html"
+                        class="app-nav-link"
+                    >
+                        <span>Journal</span>
+                    </a>
+
+
+                    <a
+                        href="performance.html"
+                        class="app-nav-link active"
+                    >
+                        <span>Performance</span>
+                    </a>
+
+
+                    <a
+                        href="analytics.html"
+                        class="app-nav-link"
+                    >
+                        <span>Analytics</span>
+                    </a>
+
+
+                    <a
+                        href="team.html"
+                        class="app-nav-link"
+                    >
+                        <span>Team</span>
+                    </a>
+
+
+                    <a
+                        href="settings.html"
+                        class="app-nav-link"
+                    >
+                        <span>Settings</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-user">
+
+                    <div class="user-avatar" id="sidebar-user-avatar">
+                        E
+                    </div>
+
+
+                    <div class="user-info">
+
+                        <strong id="sidebar-user-name">
+                            Enummanuel
+                        </strong>
+
+                        <span>
+                            Trader
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="index.html"
+                    class="logout-link"
+                >
+                    Log out
+                </a>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- Main application -->
+        <main class="app-main">
+
+            <div class="performance-content">
+
+
+                <!-- Performance Header -->
+                <header class="performance-page-header">
+
+                    <div class="performance-heading">
+
+                        <span class="app-eyebrow">
+                            PERFORMANCE
+                        </span>
+
+                        <h1>
+                            Understand the numbers.
+                        </h1>
+
+                        <p>
+                            Go beyond individual trades and see
+                            what your trading process is actually
+                            producing over time.
+                        </p>
+
+                    </div>
+
+
+                    <div class="performance-period-selector">
+
+                        <button
+                            type="button"
+                            class="performance-period-button active"
+                            data-period="1M"
+                        >
+                            1M
+                        </button>
+
+                        <button
+                            type="button"
+                            class="performance-period-button"
+                            data-period="3M"
+                        >
+                            3M
+                        </button>
+
+                        <button
+                            type="button"
+                            class="performance-period-button"
+                            data-period="6M"
+                        >
+                            6M
+                        </button>
+
+                        <button
+                            type="button"
+                            class="performance-period-button"
+                            data-period="1Y"
+                        >
+                            1Y
+                        </button>
+
+                        <button
+                            type="button"
+                            class="performance-period-button"
+                            data-period="ALL"
+                        >
+                            ALL
+                        </button>
+
+                    </div>
+
+                </header>
+
+
+
+                <!-- Performance Overview -->
+                <section class="performance-overview">
+
+                    <article class="performance-stat panel">
+
+                        <span class="app-eyebrow">
+                            NET PERFORMANCE
+                        </span>
+
+                        <strong id="performance-net-r">
+                            0R
+                        </strong>
+
+                        <small>
+                            Selected period
+                        </small>
+
+                    </article>
+
+
+                    <article class="performance-stat panel">
+
+                        <span class="app-eyebrow">
+                            WIN RATE
+                        </span>
+
+                        <strong id="performance-win-rate">
+                            0%
+                        </strong>
+
+                        <small>
+                            Winning trades
+                        </small>
+
+                    </article>
+
+
+                    <article class="performance-stat panel">
+
+                        <span class="app-eyebrow">
+                            AVERAGE R
+                        </span>
+
+                        <strong id="performance-average-r">
+                            0R
+                        </strong>
+
+                        <small>
+                            Per trade
+                        </small>
+
+                    </article>
+
+
+                    <article class="performance-stat panel">
+
+                        <span class="app-eyebrow">
+                            TOTAL TRADES
+                        </span>
+
+                        <strong id="performance-total-trades">
+                            0
+                        </strong>
+
+                        <small>
+                            Recorded trades
+                        </small>
+
+                    </article>
+
+                </section>
+
+
+
+                <!-- Main Performance Chart -->
+                <section class="performance-chart-panel panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="app-eyebrow">
+                                EQUITY CURVE
+                            </span>
+
+                            <h2>
+                                Performance over time
+                            </h2>
+
+                        </div>
+
+
+                        <span
+                            id="performance-chart-period"
+                            class="panel-period"
+                        >
+                            Last month
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="performance-main-chart"
+                        id="performance-main-chart"
+                    >
+
+                        <div class="performance-chart-empty">
+
+                            <span>
+                                NO PERFORMANCE DATA
+                            </span>
+
+                            <p>
+                                Your cumulative performance
+                                will appear here as you record trades.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- Lower Performance Area -->
+                <section class="performance-analysis-grid">
+
+
+                    <!-- Trade Analysis -->
+                    <section class="performance-analysis-panel panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="app-eyebrow">
+                                    TRADE ANALYSIS
+                                </span>
+
+                                <h2>
+                                    Wins & losses
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="performance-analysis-list">
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Winning trades
+                                </span>
+
+                                <strong id="performance-winning-trades">
+                                    0
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Losing trades
+                                </span>
+
+                                <strong id="performance-losing-trades">
+                                    0
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Average winning R
+                                </span>
+
+                                <strong id="performance-average-win">
+                                    0R
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Average losing R
+                                </span>
+
+                                <strong id="performance-average-loss">
+                                    0R
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Largest win
+                                </span>
+
+                                <strong id="performance-largest-win">
+                                    0R
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Largest loss
+                                </span>
+
+                                <strong id="performance-largest-loss">
+                                    0R
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- Consistency -->
+                    <section class="performance-analysis-panel panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="app-eyebrow">
+                                    CONSISTENCY
+                                </span>
+
+                                <h2>
+                                    Trading rhythm
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="performance-analysis-list">
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Winning days
+                                </span>
+
+                                <strong id="performance-winning-days">
+                                    0
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Losing days
+                                </span>
+
+                                <strong id="performance-losing-days">
+                                    0
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Best winning streak
+                                </span>
+
+                                <strong id="performance-best-streak">
+                                    0 days
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Worst losing streak
+                                </span>
+
+                                <strong id="performance-worst-streak">
+                                    0 days
+                                </strong>
+
+                            </div>
+
+
+                            <div class="performance-analysis-row">
+
+                                <span>
+                                    Average trades / day
+                                </span>
+
+                                <strong id="performance-average-trades-day">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </section>
+
+
+
+                <!-- Pair Performance -->
+                <section class="performance-table-panel panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="app-eyebrow">
+                                MARKET PERFORMANCE
+                            </span>
+
+                            <h2>
+                                Performance by pair
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="performance-pair-list"
+                        id="performance-pair-list"
+                    >
+
+                        <div class="performance-empty-row">
+                            No pair performance available yet.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- Setup Performance -->
+                <section class="performance-table-panel panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="app-eyebrow">
+                                SETUP PERFORMANCE
+                            </span>
+
+                            <h2>
+                                Which setups actually work?
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="performance-setup-list"
+                        id="performance-setup-list"
+                    >
+
+                        <div class="performance-empty-row">
+                            No setup performance available yet.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/performance.js"></script>
+
+</body>
+
+</html>

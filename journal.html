@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Journal — Traders Lab</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="app-page">
+
+    <div class="app-layout">
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+
+            <div class="sidebar-top">
+
+                <a href="dashboard.html" class="app-logo">
+                    TRADERS LAB
+                </a>
+
+                <nav class="app-nav">
+
+                    <a href="dashboard.html" class="app-nav-link">
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="journal.html" class="app-nav-link active">
+                        <span>Journal</span>
+                    </a>
+
+                    <a href="performance.html" class="app-nav-link">
+                        <span>Performance</span>
+                    </a>
+
+                    <a href="analytics.html" class="app-nav-link">
+                        <span>Analytics</span>
+                    </a>
+
+                    <a href="team.html" class="app-nav-link">
+                        <span>Team</span>
+                    </a>
+
+                    <a href="settings.html" class="app-nav-link">
+                        <span>Settings</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-user">
+
+                    <div class="user-avatar" id="sidebar-user-avatar">
+                        E
+                    </div>
+
+                    <div class="user-info">
+                        <strong id="sidebar-user-name">Enummanuel</strong>
+                        <span>Trader</span>
+                    </div>
+
+                </div>
+
+                <a href="index.html" class="logout-link" id="logout-link">
+                    Log out
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main application -->
+        <main class="app-main">
+
+            <div class="journal-content">
+
+                <!-- Journal Header -->
+                <header class="journal-page-header">
+
+                    <div class="journal-heading">
+
+                        <span class="app-eyebrow">
+                            TRADING JOURNAL
+                        </span>
+
+                        <h1>
+                            Record the process.
+                        </h1>
+
+                        <p>
+                            Every trade is a piece of data. Record it,
+                            review it, and let your performance tell the story.
+                        </p>
+
+                    </div>
+
+                    <button class="journal-add-button" id="open-trade-form" type="button">
+                        <span>+</span>
+                        Add Trade
+                    </button>
+
+                </header>
+
+
+                <!-- Add Trade Form -->
+<section class="add-trade-panel panel" id="add-trade-panel">
+
+    <div class="panel-header">
+
+        <div>
+            <span class="app-eyebrow">
+                NEW TRADE
+            </span>
+
+            <h2>
+                Record a trade
+            </h2>
+        </div>
+
+        <span class="add-trade-status">
+            Draft
+        </span>
+
+    </div>
+
+
+    <form class="trade-form">
+
+        <!-- Trade Context -->
+        <div class="trade-form-section">
+
+            <div class="trade-form-section-heading">
+                <span>01</span>
+                <div>
+                    <strong>Trade Context</strong>
+                    <small>Identify the market and direction.</small>
+                </div>
+            </div>
+
+
+            <div class="trade-form-grid">
+
+                <div class="trade-field">
+
+                      <label for="trade-outcome">
+                        Outcome
+                    </label>
+
+                    <select id="trade-outcome" name="outcome">
+                        <option value="">Select outcome</option>
+                        <option value="WIN">Win</option>
+                        <option value="LOSS">Loss</option>
+                        <option value="BREAKEVEN">Breakeven</option>
+                    </select>
+
+                    <label for="trade-pair">
+                        Pair
+                    </label>
+
+                    <select id="trade-pair" name="pair">
+                        <option value="">Select pair</option>
+                        <option value="GBPJPY">GBPJPY</option>
+                        <option value="GBPUSD">GBPUSD</option>
+                        <option value="EURUSD">EURUSD</option>
+                        <option value="XAUUSD">XAUUSD</option>
+                        <option value="BTCUSD">BTCUSD</option>
+                    </select>
+                </div>
+
+
+                <div class="trade-field">
+                    <label for="trade-direction">
+                        Direction
+                    </label>
+
+                    <select id="trade-direction" name="direction">
+                        <option value="">Select direction</option>
+                        <option value="BUY">Buy</option>
+                        <option value="SELL">Sell</option>
+                    </select>
+                </div>
+
+
+                <div class="trade-field">
+                    <label for="trade-date">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="trade-date"
+                        name="date"
+                    >
+                </div>
+
+
+                <div class="trade-field">
+                    <label for="trade-time">
+                        Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="trade-time"
+                        name="time"
+                    >
+                </div>
+
+
+                <div class="trade-field trade-field-full">
+                    <label for="trade-setup">
+                        Setup
+                    </label>
+
+                    <input
+                        type="text"
+                        id="trade-setup"
+                        name="setup"
+                        placeholder="e.g. Liquidity Sweep, Continuation, Valid Setup"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Trade Execution -->
+        <div class="trade-form-section">
+
+            <div class="trade-form-section-heading">
+                <span>02</span>
+                <div>
+                    <strong>Execution</strong>
+                    <small>Record the numbers behind the trade.</small>
+                </div>
+            </div>
+
+
+            <div class="trade-form-grid">
+
+                <div class="trade-field">
+                    <label for="trade-entry">
+                        Entry Price
+                    </label>
+
+                    <input
+                        type="number"
+                        id="trade-entry"
+                        name="entry"
+                        step="any"
+                        placeholder="0.00000"
+                    >
+                </div>
+
+
+                <div class="trade-field">
+                    <label for="trade-stop">
+                        Stop Loss
+                    </label>
+
+                    <input
+                        type="number"
+                        id="trade-stop"
+                        name="stopLoss"
+                        step="any"
+                        placeholder="0.00000"
+                    >
+                </div>
+
+
+                <div class="trade-field">
+                    <label for="trade-target">
+                        Take Profit
+                    </label>
+
+                    <input
+                        type="number"
+                        id="trade-target"
+                        name="takeProfit"
+                        step="any"
+                        placeholder="0.00000"
+                    >
+                </div>
+
+
+                <div class="trade-field">
+                    <label for="trade-risk">
+                        Risk
+                    </label>
+
+                    <input
+                        type="number"
+                        id="trade-risk"
+                        name="risk"
+                        step="0.1"
+                        placeholder="1.0"
+                    >
+                </div>
+
+
+                <div class="trade-field">
+                    <label for="trade-result">
+                        Result (R)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="trade-result"
+                        name="result"
+                        step="0.1"
+                        placeholder="+2.0"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Screenshot -->
+        <div class="trade-form-section">
+
+            <div class="trade-form-section-heading">
+                <span>03</span>
+                <div>
+                    <strong>Trade Screenshot</strong>
+                    <small>Keep visual evidence of the setup and execution.</small>
+                </div>
+            </div>
+
+
+            <div class="trade-screenshot-upload">
+
+                <input
+                    type="file"
+                    id="trade-screenshot"
+                    name="screenshot"
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
+                <label for="trade-screenshot" class="screenshot-dropzone">
+
+                    <span class="screenshot-upload-icon">
+                        +
+                    </span>
+
+                    <strong>
+                        Upload trade screenshot
+                    </strong>
+
+                    <small>
+                        PNG, JPG or WebP
+                    </small>
+
+                    <img
+                      id="screenshot-preview"
+                      class="screenshot-preview"
+                      src=""
+                      alt="Trade screenshot preview"
+                  >
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- Review -->
+        <div class="trade-form-section">
+
+            <div class="trade-form-section-heading">
+                <span>04</span>
+                <div>
+                    <strong>Trade Review</strong>
+                    <small>Capture what happened beyond the numbers.</small>
+                </div>
+            </div>
+
+
+            <div class="trade-field trade-field-full">
+
+                <label for="trade-notes">
+                    Notes
+                </label>
+
+                <textarea
+                    id="trade-notes"
+                    name="notes"
+                    rows="5"
+                    placeholder="What did you see? Was the setup valid? How was the execution?"
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <!-- Form Actions -->
+        <div class="trade-form-actions">
+
+            <button
+                type="button"
+                class="trade-cancel-button"
+                id="cancel-trade-form"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="submit"
+                class="trade-save-button"
+            >
+                Save Trade
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+                <!-- Journal Summary -->
+                <section class="journal-summary">
+
+                    <article class="journal-summary-card">
+
+                        <span>
+                            TOTAL TRADES
+                        </span>
+                        <strong id="journal-total-trades">
+                            0
+                        </strong>
+
+                        <small>
+                            All recorded trades
+                        </small>
+
+                    </article>
+
+
+                    <article class="journal-summary-card">
+
+                        <span>
+                            WIN RATE
+                        </span>
+
+                      <strong id="journal-win-rate">
+                          0%
+                      </strong>
+
+                        <small>
+                            Based on recorded results
+                        </small>
+
+                    </article>
+
+
+                    <article class="journal-summary-card">
+
+                        <span>
+                            NET RESULT
+                        </span>
+
+                        <strong id="journal-net-result">
+                            0R
+                        </strong>
+
+                        <small>
+                            Total performance
+                        </small>
+
+                    </article>
+
+
+                    <article class="journal-summary-card">
+
+                        <span>
+                            AVERAGE R
+                        </span>
+
+                          <strong id="journal-average-r">
+                              0R
+                          </strong>
+
+                        <small>
+                            Per trade
+                        </small>
+
+                    </article>
+
+                </section>
+
+
+                <!-- Journal Panel -->
+                <section class="journal-panel panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <span class="app-eyebrow">
+                                TRADE HISTORY
+                            </span>
+
+                            <h2>
+                                Your recorded trades
+                            </h2>
+                        </div>
+
+                        <div class="journal-header-actions">
+
+                            <div class="journal-data-actions">
+
+                                <button
+                                    type="button"
+                                    class="journal-data-button"
+                                    id="export-journal"
+                                >
+                                    Export Journal
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="journal-data-button"
+                                    id="import-journal"
+                                >
+                                    Import Journal
+                                </button>
+
+                                <input
+                                    type="file"
+                                    id="journal-import-file"
+                                    accept=".json,application/json"
+                                    hidden
+                                >
+
+                                <button
+                                  type="button"
+                                  class="journal-data-button"
+                                  id="export-csv"
+                                >
+                                  Export CSV
+                                </button>
+
+                                <button
+                                  type="button"
+                                  class="journal-data-button"
+                                  id="export-pdf"
+                                >
+                                  Export PDF
+                                </button>
+
+                            </div>
+
+                            <div class="journal-controls">
+
+                                <button
+                                    type="button"
+                                    class="journal-filter active"
+                                    data-filter="all"
+                                >
+                                    All trades
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="journal-filter"
+                                    data-filter="today"
+                                >
+                                    Today
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="journal-filter"
+                                    data-filter="yesterday"
+                                >
+                                    Yesterday
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="journal-filter"
+                                    data-filter="this-week"
+                                >
+                                    This week
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="journal-filter"
+                                    data-filter="last-week"
+                                >
+                                    Last week
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="journal-filter"
+                                    data-filter="this-month"
+                                >
+                                    This month
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="journal-filter"
+                                    data-filter="last-month"
+                                >
+                                    Last month
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Trade History -->
+                    <div class="journal-trade-list" id="journal-trade-list"></div>
+                    <!-- Empty Journal State -->
+                    <div class="journal-empty-state" id="journal-empty-state">
+
+                        <div class="journal-empty-icon">
+                            +
+                        </div>
+
+                        <h3>
+                            No trades recorded yet.
+                        </h3>
+
+                        <p>
+                            Start building your trading record by adding
+                            your first trade to the journal.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="journal-empty-button"
+                            id="open-trade-form-empty"
+                        >
+                            Add your first trade
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Journal Philosophy -->
+                <section class="journal-note">
+
+                    <span class="app-eyebrow">
+                        THE PURPOSE
+                    </span>
+
+                    <h2>
+                        Don't just record the outcome.
+                        <span>Record the process.</span>
+                    </h2>
+
+                    <p>
+                        A winning trade doesn't automatically mean good execution,
+                        and a losing trade doesn't automatically mean a bad process.
+                        Traders Lab keeps the record detailed enough to help you
+                        separate the two.
+                    </p>
+
+                </section>
+
+            </div>
+
+
+            <section class="journal-pdf-report" id="journal-pdf-report">
+
+    <div class="pdf-report-header">
+        <div>
+            <span class="app-eyebrow">TRADERS LAB</span>
+            <h1>Trading Performance Report</h1>
+            <p id="pdf-report-period">All recorded trades</p>
+        </div>
+
+        <div class="pdf-report-date">
+            <span>Generated</span>
+            <strong id="pdf-report-generated-date"></strong>
+        </div>
+    </div>
+
+    <div class="pdf-report-summary">
+
+        <div class="pdf-summary-item">
+            <span>Total Trades</span>
+            <strong id="pdf-total-trades">0</strong>
+        </div>
+
+        <div class="pdf-summary-item">
+            <span>Win Rate</span>
+            <strong id="pdf-win-rate">0%</strong>
+        </div>
+
+        <div class="pdf-summary-item">
+            <span>Net Result</span>
+            <strong id="pdf-net-result">0R</strong>
+        </div>
+
+        <div class="pdf-summary-item">
+            <span>Average R</span>
+            <strong id="pdf-average-r">0R</strong>
+        </div>
+
+    </div>
+
+    <div class="pdf-report-section">
+        <div class="pdf-section-heading">
+            <span>01</span>
+            <h2>Trade History</h2>
+        </div>
+
+        <table class="pdf-trade-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Pair</th>
+                    <th>Direction</th>
+                    <th>Setup</th>
+                    <th>Outcome</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+
+            <tbody id="pdf-trade-table-body"></tbody>
+        </table>
+    </div>
+
+    <div class="pdf-report-footer">
+        <span>TRADERS LAB</span>
+        <span>Trading Performance Report</span>
+    </div>
+
+</section>
+
+        </main>
+
+    </div>
+
+    <!-- =======================================
+          DELETE MODAL
+    ======================================= -->
+
+    <div class="trade-delete-modal" id="trade-delete-modal">
+    <div class="trade-delete-dialog">
+        <div class="trade-delete-icon">!</div>
+
+        <div class="trade-delete-content">
+            <span class="app-eyebrow">CONFIRM ACTION</span>
+            <h2>Delete this trade?</h2>
+            <p>
+                This trade will be permanently removed from your journal.
+                This action cannot be undone.
+            </p>
+        </div>
+
+        <div class="trade-delete-actions">
+            <button
+                type="button"
+                class="trade-delete-cancel"
+                id="trade-delete-cancel"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="trade-delete-confirm"
+                id="trade-delete-confirm"
+            >
+                Delete Trade
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- =======================================
+     SCREENSHOT VIEWER
+======================================= -->
+
+<div class="trade-screenshot-modal" id="trade-screenshot-modal">
+
+    <div class="trade-screenshot-dialog">
+
+        <button
+            type="button"
+            class="trade-screenshot-close"
+            id="trade-screenshot-close"
+            aria-label="Close screenshot"
+        >
+            ×
+        </button>
+
+        <img
+            id="trade-screenshot-viewer"
+            src=""
+            alt="Trade screenshot"
+        >
+
+    </div>
+
+</div>
+    <script src="js/auth.js"></script>
+    <script src="js/journal.js"></script>
+</body>
+</html>

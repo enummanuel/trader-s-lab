@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics — Traders Lab</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="app-page">
+
+    <div class="app-layout">
+
+        <!-- ========================================
+             SIDEBAR
+        ========================================= -->
+
+        <aside class="app-sidebar">
+
+            <div class="sidebar-top">
+
+                <a href="dashboard.html" class="app-logo">
+                    TRADERS LAB
+                </a>
+
+                <nav class="app-nav">
+
+                    <a href="dashboard.html" class="app-nav-link">
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="journal.html" class="app-nav-link">
+                        <span>Journal</span>
+                    </a>
+
+                    <a href="performance.html" class="app-nav-link">
+                        <span>Performance</span>
+                    </a>
+
+                    <a href="analytics.html" class="app-nav-link active">
+                        <span>Analytics</span>
+                    </a>
+
+                    <a href="team.html" class="app-nav-link">
+                        <span>Team</span>
+                    </a>
+
+                    <a href="settings.html" class="app-nav-link">
+                        <span>Settings</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-user">
+
+                    <div class="user-avatar" id="sidebar-user-avatar">
+                        E
+                    </div>
+
+                    <div class="user-info">
+                        <strong id="sidebar-user-name">Enummanuel</strong>
+                        <span>Trader</span>
+                    </div>
+
+                </div>
+
+                <a href="index.html" class="logout-link">
+                    Log out
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ========================================
+             MAIN
+        ========================================= -->
+
+        <main class="app-main">
+
+            <div class="analytics-content">
+
+
+                <!-- ========================================
+                     ANALYTICS HEADER
+                ========================================= -->
+
+                <header class="analytics-page-header">
+
+                    <div class="analytics-heading">
+
+                        <span class="app-eyebrow">
+                            ANALYTICS
+                        </span>
+
+                        <h1>
+                            Find the patterns behind the numbers.
+                        </h1>
+
+                        <p>
+                            Break down your trading behavior and discover
+                            where your edge is strongest, where it weakens,
+                            and what your data is trying to tell you.
+                        </p>
+
+                    </div>
+
+
+                    <div class="analytics-period-selector">
+
+                        <button
+                            type="button"
+                            class="analytics-period-button active"
+                            data-period="1M"
+                        >
+                            1M
+                        </button>
+
+                        <button
+                            type="button"
+                            class="analytics-period-button"
+                            data-period="3M"
+                        >
+                            3M
+                        </button>
+
+                        <button
+                            type="button"
+                            class="analytics-period-button"
+                            data-period="6M"
+                        >
+                            6M
+                        </button>
+
+                        <button
+                            type="button"
+                            class="analytics-period-button"
+                            data-period="1Y"
+                        >
+                            1Y
+                        </button>
+
+                        <button
+                            type="button"
+                            class="analytics-period-button"
+                            data-period="ALL"
+                        >
+                            ALL
+                        </button>
+
+                    </div>
+
+                </header>
+
+
+                <!-- ========================================
+                     ANALYTICS OVERVIEW
+                ========================================= -->
+
+                <section class="analytics-overview">
+
+
+                    <article class="analytics-stat panel">
+
+                        <span class="app-eyebrow">
+                            EXPECTANCY
+                        </span>
+
+                        <strong id="analytics-expectancy">
+                            0R
+                        </strong>
+
+                        <small>
+                            Expected R per trade
+                        </small>
+
+                    </article>
+
+
+                    <article class="analytics-stat panel">
+
+                        <span class="app-eyebrow">
+                            PROFIT FACTOR
+                        </span>
+
+                        <strong id="analytics-profit-factor">
+                            0.00
+                        </strong>
+
+                        <small>
+                            Gross profit ÷ gross loss
+                        </small>
+
+                    </article>
+
+
+                    <article class="analytics-stat panel">
+
+                        <span class="app-eyebrow">
+                            MAX DRAWDOWN
+                        </span>
+
+                        <strong id="analytics-max-drawdown">
+                            0R
+                        </strong>
+
+                        <small>
+                            Largest equity decline
+                        </small>
+
+                    </article>
+
+
+                    <article class="analytics-stat panel">
+
+                        <span class="app-eyebrow">
+                            RISK CONSISTENCY
+                        </span>
+
+                        <strong id="analytics-risk-consistency">
+                            0%
+                        </strong>
+
+                        <small>
+                            Consistency of recorded risk
+                        </small>
+
+                    </article>
+
+
+                </section>
+
+
+                <!-- ========================================
+                     DIRECTION ANALYSIS
+                ========================================= -->
+
+                <section class="analytics-section panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="app-eyebrow">
+                                DIRECTION
+                            </span>
+
+                            <h2>
+                                Long vs short performance
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analytics-direction-grid"
+                        id="analytics-direction-grid"
+                    >
+
+                        <div class="analytics-empty-row">
+                            No direction data available yet.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ========================================
+                     TIME ANALYSIS
+                ========================================= -->
+
+                <section class="analytics-section panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="app-eyebrow">
+                                TIMING
+                            </span>
+
+                            <h2>
+                                When do you trade best?
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analytics-time-grid"
+                        id="analytics-time-grid"
+                    >
+
+                        <div class="analytics-empty-row">
+                            No timing data available yet.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ========================================
+                     WEEKDAY ANALYSIS
+                ========================================= -->
+
+                <section class="analytics-section panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="app-eyebrow">
+                                WEEKDAY
+                            </span>
+
+                            <h2>
+                                Performance by day
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analytics-weekday-grid"
+                        id="analytics-weekday-grid"
+                    >
+
+                        <div class="analytics-empty-row">
+                            No weekday data available yet.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ========================================
+                     RISK ANALYSIS
+                ========================================= -->
+
+                <section class="analytics-section panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="app-eyebrow">
+                                RISK
+                            </span>
+
+                            <h2>
+                                Risk behavior
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="analytics-risk-grid"
+                        id="analytics-risk-grid"
+                    >
+
+                        <div class="analytics-empty-row">
+                            No risk data available yet.
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/analytics.js"></script>
+
+</body>
+
+</html>
