@@ -1,4 +1,3 @@
-const PASSWORD_STORAGE_KEY = "tradersLabPasswordHash";
 const SETTINGS_STORAGE_KEY = "tradersLabSettings";
 
 
@@ -134,50 +133,6 @@ function setupSettingsListeners() {
    PASSWORD
 ======================================== */
 
-async function hashPassword(password) {
-
-    const encoder = new TextEncoder();
-
-    const data = encoder.encode(password);
-
-    const hashBuffer = await crypto.subtle.digest(
-        "SHA-256",
-        data
-    );
-
-    const hashArray = Array.from(
-        new Uint8Array(hashBuffer)
-    );
-
-    return hashArray
-        .map((byte) =>
-            byte.toString(16).padStart(2, "0")
-        )
-        .join("");
-}
-
-
-async function initializePassword() {
-
-    const storedHash =
-        localStorage.getItem(PASSWORD_STORAGE_KEY);
-
-    if (storedHash) {
-        return;
-    }
-
-    const defaultPassword = "traderslab";
-
-    const passwordHash =
-        await hashPassword(defaultPassword);
-
-    localStorage.setItem(
-        PASSWORD_STORAGE_KEY,
-        passwordHash
-    );
-}
-
-
 function showPasswordFeedback(message, type) {
 
     const feedback =
@@ -192,9 +147,10 @@ function showPasswordFeedback(message, type) {
 }
 
 
-async function handlePasswordChange(event) {
+function handlePasswordChange(event) {
 
     event.preventDefault();
+
 
     const currentPassword =
         document.getElementById("current-password").value;
@@ -228,14 +184,51 @@ async function handlePasswordChange(event) {
     }
 
 
-    const storedHash =
-        localStorage.getItem(PASSWORD_STORAGE_KEY);
+    const session =
+        JSON.parse(
+            localStorage.getItem("tradersLabSession")
+        );
 
-    const currentPasswordHash =
-        await hashPassword(currentPassword);
+
+    if (!session || !session.userId) {
+
+        showPasswordFeedback(
+            "Unable to identify your account.",
+            "error"
+        );
+
+        return;
+    }
 
 
-    if (currentPasswordHash !== storedHash) {
+    const users =
+        JSON.parse(
+            localStorage.getItem("tradersLabUsers")
+        ) || [];
+
+
+    const userIndex =
+        users.findIndex(
+            user => user.id === session.userId
+        );
+
+
+    if (userIndex === -1) {
+
+        showPasswordFeedback(
+            "Unable to find your account.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const currentUser =
+        users[userIndex];
+
+
+    if (currentUser.password !== currentPassword) {
 
         showPasswordFeedback(
             "Current password is incorrect.",
@@ -246,13 +239,13 @@ async function handlePasswordChange(event) {
     }
 
 
-    const newPasswordHash =
-        await hashPassword(newPassword);
+    users[userIndex].password =
+        newPassword;
 
 
     localStorage.setItem(
-        PASSWORD_STORAGE_KEY,
-        newPasswordHash
+        "tradersLabUsers",
+        JSON.stringify(users)
     );
 
 
@@ -277,8 +270,6 @@ function initializeSettingsPage() {
     loadSettingsIntoForm();
 
     setupSettingsListeners();
-
-    initializePassword();
 
 
     const passwordForm =
