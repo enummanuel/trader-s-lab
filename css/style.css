@@ -7238,26 +7238,258 @@ body.modal-open {
    MOBILE
    ------------------------------------------------------ */
 
+/* ------------------------------------------------------
+   MOBILE
+   ------------------------------------------------------ */
+
+/* ------------------------------------------------------
+   JOURNAL REFLECTIONS — MOBILE FIX
+   ------------------------------------------------------ */
+
 @media (max-width: 768px) {
 
-    .journal-reflection-summary {
-        grid-template-columns: 1fr;
+    .journal-reflections {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+
+        padding: 20px !important;
+
+        box-sizing: border-box !important;
+
+        overflow: hidden !important;
     }
+
+
+    /* Header */
+
+    .journal-reflections .panel-header {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        box-sizing: border-box !important;
+    }
+
+
+    .journal-reflections .panel-header > div {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+
+
+    .journal-reflections .panel-header h2,
+    .journal-reflections .panel-header p {
+        width: 100%;
+        max-width: 100%;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    /* ================================
+       REFLECTION SUMMARY
+    ================================= */
+
+    .journal-reflection-summary {
+        display: grid !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        grid-template-columns: minmax(0, 1fr) !important;
+
+        gap: 12px;
+
+        margin-top: 20px;
+
+        padding: 0 !important;
+
+        box-sizing: border-box !important;
+    }
+
+
+    .journal-reflection-stat {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        padding: 18px !important;
+
+        box-sizing: border-box !important;
+
+        overflow: hidden;
+    }
+
+
+    .journal-reflection-stat span,
+    .journal-reflection-stat strong,
+    .journal-reflection-stat small {
+        display: block;
+
+        max-width: 100%;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    /* ================================
+       REFLECTION LIST
+    ================================= */
 
     .journal-reflection-list {
+        display: block;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        margin-top: 20px;
+
+        padding-right: 0 !important;
+
+        box-sizing: border-box !important;
+
         max-height: 420px;
-        padding-right: 6px;
+
+        overflow-x: hidden !important;
+        overflow-y: auto;
     }
+
+
+    /* ================================
+       EACH REFLECTION
+    ================================= */
+
+    .journal-reflection-item {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        box-sizing: border-box !important;
+
+        overflow: hidden;
+    }
+
 
     .journal-reflection-meta {
+        display: flex;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
         align-items: flex-start;
+
+        gap: 10px;
+
+        box-sizing: border-box;
     }
 
+
+    .journal-reflection-trade {
+        flex: 1 1 auto;
+
+        width: auto;
+        max-width: 100%;
+        min-width: 0;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    .journal-reflection-trade strong,
+    .journal-reflection-trade span {
+        max-width: 100%;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    .journal-reflection-result {
+        flex: 0 0 auto;
+
+        max-width: 40%;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    .journal-reflection-details {
+        display: flex;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-reflection-details span {
+        max-width: 100%;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    /* ================================
+       REFLECTION NOTE
+    ================================= */
+
     .journal-reflection-note {
-        padding: 16px;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        margin-top: 14px;
+
+        padding: 16px !important;
+
+        box-sizing: border-box !important;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
+
+        overflow: hidden;
+    }
+
+
+    /* ================================
+       EMPTY STATE
+    ================================= */
+
+    .journal-reflection-empty {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+
+        padding: 32px 18px !important;
+
+        box-sizing: border-box !important;
+
+        overflow-wrap: anywhere;
+
+        overflow: hidden;
     }
 
 }
+
 
 /* ======================================================
    PDF JOURNAL REFLECTIONS
@@ -7334,4 +7566,582 @@ body.modal-open {
 
 .pdf-reflection-result.neutral {
     color: #777;
+}
+
+
+/* ======================================================
+   TRADE HISTORY — MOBILE RESPONSIVE FIX
+   ====================================================== */
+
+@media (max-width: 768px) {
+
+    /* ================================================
+       TRADE HISTORY PANEL
+    ================================================ */
+
+    .journal-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+
+    /* ================================================
+       PANEL HEADER
+    ================================================ */
+
+    .journal-panel .panel-header {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-panel .panel-header > div:first-child {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+
+    /* ================================================
+       EXPORT / IMPORT / CSV / PDF
+    ================================================ */
+
+    .journal-header-actions {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-data-actions {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-data-button {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        white-space: normal;
+    }
+
+
+    /* ================================================
+       FILTER BUTTONS
+    ================================================ */
+
+    .journal-controls {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-filter {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        white-space: normal;
+    }
+
+
+    /* ================================================
+       TRADE LIST
+    ================================================ */
+
+    .journal-trade-list {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        overflow-x: hidden;
+    }
+
+
+    /* ================================================
+       TRADE CARDS GENERATED BY JAVASCRIPT
+    ================================================ */
+
+    .journal-trade-list > * {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+
+    /* ================================================
+       COMMON FLEX / GRID CHILD SAFETY
+    ================================================ */
+
+    .journal-trade-list > * * {
+        min-width: 0;
+        max-width: 100%;
+
+        box-sizing: border-box;
+    }
+
+
+    /* ================================================
+       LONG TEXT SAFETY
+    ================================================ */
+
+    .journal-trade-list strong,
+    .journal-trade-list span,
+    .journal-trade-list small,
+    .journal-trade-list p {
+        max-width: 100%;
+
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+
+    /* ================================================
+       BUTTON SAFETY
+    ================================================ */
+
+    .journal-trade-list button {
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+    }
+
+
+    /* ================================================
+       IMAGES / SCREENSHOTS
+    ================================================ */
+
+    .journal-trade-list img {
+        max-width: 100%;
+        height: auto;
+
+        box-sizing: border-box;
+    }
+
+
+    /* ================================================
+       EMPTY STATE
+    ================================================ */
+
+    .journal-empty-state {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+}
+
+/* ======================================================
+   TRADE HISTORY — MOBILE CARD LAYOUT
+   ====================================================== */
+
+@media (max-width: 768px) {
+
+    /* ================================================
+       TRADE HISTORY PANEL
+    ================================================ */
+
+    .journal-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+
+    /* ================================================
+       TRADE HISTORY HEADER
+    ================================================ */
+
+    .journal-panel .panel-header {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 20px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-panel .panel-header > div:first-child {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+
+    /* ================================================
+       EXPORT BUTTONS
+    ================================================ */
+
+    .journal-header-actions {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 12px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-data-actions {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-data-button {
+        width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        white-space: nowrap;
+    }
+
+
+    /* ================================================
+       FILTER BUTTONS
+    ================================================ */
+
+    .journal-controls {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-filter {
+        width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        white-space: nowrap;
+    }
+
+
+    /* ================================================
+       TRADE LIST
+    ================================================ */
+
+    .journal-trade-list {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        margin-top: 20px;
+
+        box-sizing: border-box;
+
+        overflow-x: hidden;
+    }
+
+
+    /* ================================================
+       INDIVIDUAL TRADE CARD
+    ================================================ */
+
+    .journal-trade-item {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            auto;
+
+        grid-template-areas:
+
+            "identity result"
+
+            "details screenshot"
+
+            "actions actions";
+
+        align-items: center;
+
+        column-gap: 14px;
+        row-gap: 14px;
+
+        padding: 18px;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+
+    /* ================================================
+       TOP LEFT
+       Pair + Direction
+    ================================================ */
+
+    .journal-trade-item > div:nth-child(1) {
+        grid-area: identity;
+
+        min-width: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+    }
+
+
+    .journal-trade-item > div:nth-child(1) strong {
+        flex: 0 0 auto;
+
+        min-width: max-content;
+
+        white-space: nowrap;
+
+        font-size: 15px;
+    }
+
+
+    .journal-trade-item > div:nth-child(1) span {
+        flex: 0 0 auto;
+
+        min-width: max-content;
+
+        white-space: nowrap;
+    }
+
+
+    /* ================================================
+       TOP RIGHT
+       Result
+    ================================================ */
+
+    .journal-trade-item > strong {
+        grid-area: result;
+
+        flex: 0 0 auto;
+
+        min-width: max-content;
+
+        white-space: nowrap;
+
+        text-align: right;
+    }
+
+
+    /* ================================================
+       MIDDLE LEFT
+       Setup + Date + Outcome
+    ================================================ */
+
+    .journal-trade-item > div:nth-child(2) {
+        grid-area: details;
+
+        min-width: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+    }
+
+
+    .journal-trade-item > div:nth-child(2) span,
+    .journal-trade-item > div:nth-child(2) small {
+        flex: 0 0 auto;
+
+        min-width: max-content;
+
+        white-space: nowrap;
+    }
+
+
+    /* ================================================
+       MIDDLE RIGHT
+       Screenshot
+    ================================================ */
+
+    .journal-trade-item .journal-trade-screenshot {
+        grid-area: screenshot;
+
+        width: 64px;
+        height: 64px;
+
+        flex: 0 0 64px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-trade-item .trade-screenshot-button {
+        width: 64px;
+        height: 64px;
+
+        flex: 0 0 64px;
+
+        padding: 0;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+
+    .journal-trade-item .trade-screenshot-button img {
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        max-width: 100%;
+
+        object-fit: cover;
+    }
+
+
+    .journal-trade-item .trade-no-screenshot {
+        white-space: nowrap;
+    }
+
+
+    /* ================================================
+       BOTTOM
+       Edit + Delete
+    ================================================ */
+
+    .journal-trade-item .journal-trade-actions {
+        grid-area: actions;
+
+        width: 100%;
+        min-width: 0;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+
+        box-sizing: border-box;
+    }
+
+
+    .journal-trade-item .journal-trade-actions button {
+        width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        white-space: nowrap;
+    }
+
+
+    /* ================================================
+       DATE / TEXT PROTECTION
+    ================================================ */
+
+    .journal-trade-item small {
+        white-space: nowrap;
+    }
+
+
+    .journal-trade-item strong,
+    .journal-trade-item span {
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
 }
