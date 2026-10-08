@@ -5,10 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Traders Lab — Trade with clarity. Improve with data.</title>
+    <link
+        rel="icon"
+        href="./assets/photo_2026-10-08_06-07-02.jpg?v=2"
+    >
+    <link
+        rel="shortcut icon"
+        href="./assets/photo_2026-10-08_06-07-02.jpg?v=2"
+    >
 
-<link rel="stylesheet" href="css/style.css">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#F4F2FA">
+    <meta name="mobile-web-app-capable" content="yes">
 
+
+    <!-- iPhone / iPad -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Traders Lab">
+    <link rel="apple-touch-icon" href="assets/photo_2026-10-08_06-07-02.jpg">
+
+    <title>Traders Lab — Trade with clarity. Improve with data.</title>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -652,6 +672,13 @@
 </footer>
 
 <script src="js/contact.js"></script>
+<script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+            navigator.serviceWorker.register("./service-worker.js");
+        });
+    }
+</script>
 
 </body>
 </html>

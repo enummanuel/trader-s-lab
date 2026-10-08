@@ -1,0 +1,22 @@
+{
+    "name": "Traders Lab",
+    "short_name": "Traders Lab",
+    "description": "Trade with clarity. Improve with data.",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#F4F2FA",
+    "theme_color": "#F4F2FA",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "assets/photo_2026-10-08_06-07-02.jpg",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/photo_2026-10-08_06-07-02.jpg",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
